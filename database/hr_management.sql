@@ -1,8 +1,10 @@
 -- HRIS ITK Database Dump
--- Created at 2026-07-24 04:21:45
+-- Created at 2026-07-24 04:34:59
 SET FOREIGN_KEY_CHECKS = 0;
+SET UNIQUE_CHECKS = 0;
 
 -- Structure for table `absensi` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `absensi`;
 CREATE TABLE `absensi` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -10,9 +12,9 @@ CREATE TABLE `absensi` (
   `tanggal` date NOT NULL,
   `jam_masuk` time DEFAULT NULL,
   `jam_pulang` time DEFAULT NULL,
-  `status` enum('hadir','terlambat','izin','sakit','cuti','dinas_luar','alfa') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'hadir',
-  `keterangan` text COLLATE utf8mb4_unicode_ci,
-  `lampiran` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('hadir','terlambat','izin','sakit','cuti','dinas_luar','alfa') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'hadir',
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `lampiran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `verified_by` bigint unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -379,13 +381,14 @@ INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`
 INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('353', '14', '2026-07-24', '08:47:00', '16:31:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
 -- Structure for table `detail_penggajian` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `detail_penggajian`;
 CREATE TABLE `detail_penggajian` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `penggajian_id` bigint unsigned NOT NULL,
   `komponen_gaji_id` bigint unsigned DEFAULT NULL,
-  `nama_komponen` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipe` enum('penghasilan','potongan') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_komponen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipe` enum('penghasilan','potongan') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `nilai` decimal(15,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -496,16 +499,17 @@ INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nam
 INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('97', '14', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
 -- Structure for table `import_logs` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `import_logs`;
 CREATE TABLE `import_logs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
-  `tipe_import` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipe_import` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_baris` int NOT NULL DEFAULT '0',
   `berhasil` int NOT NULL DEFAULT '0',
   `gagal` int NOT NULL DEFAULT '0',
-  `error_message` text COLLATE utf8mb4_unicode_ci,
+  `error_message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -514,11 +518,12 @@ CREATE TABLE `import_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Structure for table `jabatan` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `jabatan`;
 CREATE TABLE `jabatan` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nama_jabatan` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_jabatan` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gaji_pokok` decimal(15,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -536,25 +541,26 @@ INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`
 INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('8', 'Administrator', 'Staff', '5000000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
 
 -- Structure for table `karyawan` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `karyawan`;
 CREATE TABLE `karyawan` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nip` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_lengkap` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tempat_lahir` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nip` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_lengkap` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tempat_lahir` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_lahir` date DEFAULT NULL,
-  `jenis_kelamin` enum('L','P') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `no_telepon` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `agama` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pendidikan_terakhir` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status_perkawinan` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_telepon` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agama` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pendidikan_terakhir` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status_perkawinan` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_masuk` date NOT NULL,
-  `status_kepegawaian` enum('tetap','kontrak','magang','honorer') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'kontrak',
+  `status_kepegawaian` enum('tetap','kontrak','magang','honorer') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'kontrak',
   `jabatan_id` bigint unsigned NOT NULL,
   `satuan_kerja_id` bigint unsigned NOT NULL,
-  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `aktif` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -583,15 +589,16 @@ INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_la
 INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('14', 'SPV002', 'Kartika Sari', 'Palembang', '1994-03-08', 'P', 'Jl. Kolonel Burlian No. 2', '081234567811', 'kartikasari@hr.com', 'Islam', 'S2', 'Kawin', '2020-10-01', 'tetap', '3', '7', NULL, '1', '2026-07-24 10:54:02', '2026-07-24 10:54:02');
 
 -- Structure for table `komponen_gaji` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `komponen_gaji`;
 CREATE TABLE `komponen_gaji` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `kode` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipe` enum('penghasilan','potongan') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sifat` enum('tetap','variable') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kode` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipe` enum('penghasilan','potongan') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sifat` enum('tetap','variable') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `nilai` decimal(15,2) NOT NULL DEFAULT '0.00',
-  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `aktif` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -608,10 +615,11 @@ INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `ke
 INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `keterangan`, `aktif`, `created_at`, `updated_at`) VALUES ('6', 'BPJS-KES', 'BPJS Kesehatan', 'potongan', 'tetap', '100000.00', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
 
 -- Structure for table `migrations` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -631,27 +639,29 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('11', '2024_01_01_
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('12', '2024_01_01_000012_create_detail_penggajian_table', '1');
 
 -- Structure for table `password_reset_tokens` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Structure for table `pengajuan_izin` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `pengajuan_izin`;
 CREATE TABLE `pengajuan_izin` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `karyawan_id` bigint unsigned NOT NULL,
-  `jenis` enum('izin','sakit','cuti','dinas_luar') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jenis` enum('izin','sakit','cuti','dinas_luar') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal_mulai` date NOT NULL,
   `tanggal_selesai` date NOT NULL,
-  `alasan` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lampiran` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('menunggu','disetujui','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menunggu',
+  `alasan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lampiran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('menunggu','disetujui','ditolak') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menunggu',
   `approved_by` bigint unsigned DEFAULT NULL,
-  `catatan_approval` text COLLATE utf8mb4_unicode_ci,
+  `catatan_approval` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -669,11 +679,12 @@ INSERT INTO `pengajuan_izin` (`id`, `karyawan_id`, `jenis`, `tanggal_mulai`, `ta
 INSERT INTO `pengajuan_izin` (`id`, `karyawan_id`, `jenis`, `tanggal_mulai`, `tanggal_selesai`, `alasan`, `lampiran`, `status`, `approved_by`, `catatan_approval`, `created_at`, `updated_at`) VALUES ('5', '5', 'sakit', '2026-07-04', '2026-07-06', 'Kurang enak badan', NULL, 'menunggu', '2', 'Disetujui', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
 -- Structure for table `penggajian` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `penggajian`;
 CREATE TABLE `penggajian` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `karyawan_id` bigint unsigned NOT NULL,
-  `periode` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `periode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal_penggajian` date NOT NULL,
   `gaji_pokok` decimal(15,2) NOT NULL DEFAULT '0.00',
   `total_tunjangan` decimal(15,2) NOT NULL DEFAULT '0.00',
@@ -683,7 +694,7 @@ CREATE TABLE `penggajian` (
   `total_insentif` decimal(15,2) NOT NULL DEFAULT '0.00',
   `total_pajak` decimal(15,2) NOT NULL DEFAULT '0.00',
   `total_diterima` decimal(15,2) NOT NULL DEFAULT '0.00',
-  `status` enum('draft','dikonfirmasi','dibayar') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',
+  `status` enum('draft','dikonfirmasi','dibayar') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',
   `dibuat_oleh` bigint unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -711,12 +722,13 @@ INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, 
 INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('14', '14', '2026-06', '2026-07-21', '6000000.00', '1350000.00', '325000.00', '200000.00', '200000.00', '150000.00', '367500.00', '7207500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
 -- Structure for table `penilaian_kinerja` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `penilaian_kinerja`;
 CREATE TABLE `penilaian_kinerja` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `karyawan_id` bigint unsigned NOT NULL,
   `penilai_id` bigint unsigned NOT NULL,
-  `periode` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `periode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal_penilaian` date NOT NULL,
   `nilai_disiplin` decimal(5,2) NOT NULL DEFAULT '0.00',
   `nilai_kualitas` decimal(5,2) NOT NULL DEFAULT '0.00',
@@ -727,7 +739,7 @@ CREATE TABLE `penilaian_kinerja` (
   `nilai_ketepatan_waktu` decimal(5,2) NOT NULL DEFAULT '0.00',
   `nilai_target` decimal(5,2) NOT NULL DEFAULT '0.00',
   `nilai_akhir` decimal(5,2) NOT NULL DEFAULT '0.00',
-  `catatan` text COLLATE utf8mb4_unicode_ci,
+  `catatan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -750,12 +762,13 @@ INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `
 INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('10', '13', '2', '2026-06', '2026-07-23', '87.01', '95.13', '85.16', '83.77', '87.72', '84.08', '74.62', '96.09', '86.70', 'Kerja tim sudah baik', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
 -- Structure for table `satuan_kerja` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `satuan_kerja`;
 CREATE TABLE `satuan_kerja` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nama_unit` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `singkatan` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `nama_unit` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `singkatan` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -772,13 +785,14 @@ INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `creat
 INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('8', 'Umum', 'UMUM', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
 
 -- Structure for table `sessions` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
@@ -786,17 +800,18 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Structure for table `tugas_karyawan` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `tugas_karyawan`;
 CREATE TABLE `tugas_karyawan` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `karyawan_id` bigint unsigned NOT NULL,
   `pemberi_tugas` bigint unsigned NOT NULL,
-  `judul` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci,
+  `judul` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `tenggat` date DEFAULT NULL,
-  `prioritas` enum('rendah','sedang','tinggi') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'sedang',
-  `status` enum('diberikan','dikerjakan','selesai','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'diberikan',
-  `catatan_penyelesaian` text COLLATE utf8mb4_unicode_ci,
+  `prioritas` enum('rendah','sedang','tinggi') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'sedang',
+  `status` enum('diberikan','dikerjakan','selesai','ditolak') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'diberikan',
+  `catatan_penyelesaian` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -820,15 +835,16 @@ INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `de
 INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('11', '14', '2', 'Analisis data penjualan', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-14', 'sedang', 'selesai', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
 -- Structure for table `users` --
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('admin','atasan','karyawan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'karyawan',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('admin','atasan','karyawan') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'karyawan',
   `karyawan_id` bigint unsigned DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -854,3 +870,4 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('14', 'Kartika Sari', 'kartikasari@hr.com', '$2y$12$KSyU6lInNoX47T7OKXKP7.sggcmKq3Hq..BzeCs1xnkknJw7qrQuK', 'karyawan', '14', NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
 
 SET FOREIGN_KEY_CHECKS = 1;
+SET UNIQUE_CHECKS = 1;

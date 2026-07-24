@@ -13,13 +13,15 @@ try {
     
     $sql = "-- HRIS ITK Database Dump\n";
     $sql .= "-- Created at " . date('Y-m-d H:i:s') . "\n";
-    $sql .= "SET FOREIGN_KEY_CHECKS = 0;\n\n";
+    $sql .= "SET FOREIGN_KEY_CHECKS = 0;\n";
+    $sql .= "SET UNIQUE_CHECKS = 0;\n\n";
 
     foreach ($tables as $t) {
         $create = $pdo->query("SHOW CREATE TABLE `$t`")->fetch(PDO::FETCH_ASSOC);
         $createSql = $create['Create Table'] ?? $create['Create View'] ?? '';
         
         $sql .= "-- Structure for table `$t` --\n";
+        $sql .= "SET FOREIGN_KEY_CHECKS = 0;\n";
         $sql .= "DROP TABLE IF EXISTS `$t`;\n";
         $sql .= $createSql . ";\n\n";
 
@@ -40,8 +42,10 @@ try {
     }
 
     $sql .= "SET FOREIGN_KEY_CHECKS = 1;\n";
+    $sql .= "SET UNIQUE_CHECKS = 1;\n";
 
     file_put_contents(__DIR__ . '/hr_management.sql', $sql);
+    file_put_contents(dirname(__DIR__) . '/database_schema.sql', $sql);
     echo "SQL Dump exported successfully to " . __DIR__ . '/hr_management.sql' . " (" . strlen($sql) . " bytes)\n";
 } catch (Exception $e) {
     echo "Export Error: " . $e->getMessage() . "\n";
