@@ -1,258 +1,856 @@
--- Database: hr_management
--- HRIS ITK - Human Resource Information System
--- Universitas Darma Persada
--- Fakultas Teknologi Informasi
-
+-- HRIS ITK Database Dump
+-- Created at 2026-07-24 04:21:45
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Create Database (Commented out for cPanel hosting compatibility)
--- CREATE DATABASE IF NOT EXISTS hr_management CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
--- USE hr_management;
+-- Structure for table `absensi` --
+DROP TABLE IF EXISTS `absensi`;
+CREATE TABLE `absensi` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `karyawan_id` bigint unsigned NOT NULL,
+  `tanggal` date NOT NULL,
+  `jam_masuk` time DEFAULT NULL,
+  `jam_pulang` time DEFAULT NULL,
+  `status` enum('hadir','terlambat','izin','sakit','cuti','dinas_luar','alfa') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'hadir',
+  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `lampiran` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `verified_by` bigint unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `absensi_karyawan_id_tanggal_unique` (`karyawan_id`,`tanggal`),
+  KEY `absensi_verified_by_foreign` (`verified_by`),
+  CONSTRAINT `absensi_karyawan_id_foreign` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `absensi_verified_by_foreign` FOREIGN KEY (`verified_by`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=354 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Data for table `absensi` --
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('1', '1', '2026-06-24', '07:41:00', '16:32:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('2', '2', '2026-06-24', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('3', '4', '2026-06-24', '08:10:00', '16:05:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('4', '5', '2026-06-24', '08:58:00', '16:09:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('5', '6', '2026-06-24', '07:47:00', '16:21:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('6', '7', '2026-06-24', '07:48:00', '16:22:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('7', '8', '2026-06-24', '07:19:00', '16:51:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('8', '9', '2026-06-24', '08:49:00', '16:52:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('9', '10', '2026-06-24', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('10', '11', '2026-06-24', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('11', '12', '2026-06-24', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('12', '13', '2026-06-24', '08:13:00', '16:34:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('13', '14', '2026-06-24', '07:02:00', '16:39:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('14', '1', '2026-06-25', '07:32:00', '16:42:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('15', '2', '2026-06-25', '08:45:00', '16:17:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('16', '3', '2026-06-25', '08:51:00', '16:13:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('17', '4', '2026-06-25', '08:09:00', '16:10:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('18', '5', '2026-06-25', '07:15:00', '16:31:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('19', '6', '2026-06-25', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('20', '7', '2026-06-25', '07:50:00', '16:10:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('21', '8', '2026-06-25', '08:10:00', '16:22:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('22', '9', '2026-06-25', '07:05:00', '16:14:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('23', '10', '2026-06-25', '07:21:00', '16:55:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('24', '11', '2026-06-25', '08:29:00', '16:24:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('25', '12', '2026-06-25', '08:56:00', '16:11:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('26', '13', '2026-06-25', '07:28:00', '16:54:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('27', '1', '2026-06-26', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('28', '2', '2026-06-26', '07:39:00', '16:29:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('29', '3', '2026-06-26', '08:22:00', '16:53:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('30', '4', '2026-06-26', '08:00:00', '16:52:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('31', '5', '2026-06-26', '07:47:00', '16:13:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('32', '6', '2026-06-26', '08:41:00', '16:45:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('33', '7', '2026-06-26', '07:01:00', '16:15:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('34', '8', '2026-06-26', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('35', '10', '2026-06-26', '07:22:00', '16:07:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('36', '12', '2026-06-26', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('37', '13', '2026-06-26', '07:32:00', '16:52:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('38', '14', '2026-06-26', '08:42:00', '16:04:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('39', '1', '2026-06-27', '07:40:00', '16:02:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('40', '2', '2026-06-27', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('41', '3', '2026-06-27', '08:00:00', '16:11:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('42', '4', '2026-06-27', '07:36:00', '16:48:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('43', '5', '2026-06-27', '07:55:00', '16:38:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('44', '6', '2026-06-27', '07:23:00', '16:17:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('45', '7', '2026-06-27', '08:48:00', '16:19:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('46', '8', '2026-06-27', '07:32:00', '16:32:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('47', '10', '2026-06-27', '08:09:00', '16:12:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('48', '11', '2026-06-27', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('49', '12', '2026-06-27', '08:13:00', '16:22:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('50', '13', '2026-06-27', '07:36:00', '16:03:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('51', '14', '2026-06-27', '09:00:00', '16:17:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('52', '1', '2026-06-29', '07:29:00', '16:16:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('53', '2', '2026-06-29', '08:47:00', '16:04:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('54', '3', '2026-06-29', '08:01:00', '16:33:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('55', '4', '2026-06-29', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('56', '5', '2026-06-29', '07:07:00', '16:27:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('57', '6', '2026-06-29', '08:13:00', '16:06:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('58', '7', '2026-06-29', '07:14:00', '16:50:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('59', '8', '2026-06-29', '08:56:00', '16:15:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('60', '9', '2026-06-29', '07:32:00', '16:48:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('61', '10', '2026-06-29', '08:09:00', '16:39:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('62', '11', '2026-06-29', '07:02:00', '16:58:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('63', '13', '2026-06-29', '08:51:00', '16:46:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('64', '14', '2026-06-29', '08:43:00', '16:08:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('65', '1', '2026-06-30', '07:23:00', '16:08:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('66', '2', '2026-06-30', '07:12:00', '16:50:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('67', '3', '2026-06-30', '08:04:00', '16:24:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('68', '4', '2026-06-30', '08:59:00', '16:19:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('69', '5', '2026-06-30', '07:27:00', '16:04:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('70', '6', '2026-06-30', '07:37:00', '16:14:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('71', '8', '2026-06-30', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('72', '9', '2026-06-30', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('73', '10', '2026-06-30', '07:03:00', '17:00:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('74', '11', '2026-06-30', '08:17:00', '16:37:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('75', '12', '2026-06-30', '08:52:00', '16:08:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('76', '13', '2026-06-30', '08:29:00', '17:00:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('77', '14', '2026-06-30', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('78', '1', '2026-07-01', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('79', '2', '2026-07-01', '07:01:00', '16:08:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('80', '3', '2026-07-01', '07:26:00', '16:14:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('81', '4', '2026-07-01', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('82', '5', '2026-07-01', '08:34:00', '16:10:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('83', '6', '2026-07-01', '07:32:00', '16:49:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('84', '7', '2026-07-01', '07:37:00', '16:19:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('85', '8', '2026-07-01', '07:36:00', '16:51:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('86', '9', '2026-07-01', '08:28:00', '16:03:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('87', '10', '2026-07-01', '07:05:00', '16:01:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('88', '11', '2026-07-01', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('89', '13', '2026-07-01', '08:06:00', '16:11:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('90', '14', '2026-07-01', '07:22:00', '16:53:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('91', '1', '2026-07-02', '07:09:00', '16:28:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('92', '2', '2026-07-02', '07:47:00', '16:20:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('93', '3', '2026-07-02', '08:03:00', '16:03:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('94', '4', '2026-07-02', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('95', '5', '2026-07-02', '07:06:00', '16:53:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('96', '6', '2026-07-02', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('97', '7', '2026-07-02', '07:56:00', '16:45:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('98', '8', '2026-07-02', '07:58:00', '16:26:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('99', '9', '2026-07-02', '07:08:00', '16:46:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('100', '10', '2026-07-02', '07:31:00', '16:51:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('101', '11', '2026-07-02', '07:14:00', '16:11:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('102', '12', '2026-07-02', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('103', '13', '2026-07-02', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('104', '14', '2026-07-02', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('105', '1', '2026-07-03', '08:56:00', '16:11:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('106', '2', '2026-07-03', '07:39:00', '16:38:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('107', '3', '2026-07-03', '08:20:00', '16:47:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('108', '4', '2026-07-03', '08:04:00', '16:25:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('109', '5', '2026-07-03', '08:09:00', '16:46:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('110', '6', '2026-07-03', '08:24:00', '16:28:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('111', '8', '2026-07-03', '07:19:00', '16:35:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('112', '10', '2026-07-03', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('113', '11', '2026-07-03', '07:22:00', '16:09:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('114', '12', '2026-07-03', '08:09:00', '16:38:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('115', '13', '2026-07-03', '08:01:00', '16:36:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('116', '14', '2026-07-03', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('117', '1', '2026-07-04', '08:33:00', '16:49:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('118', '2', '2026-07-04', '07:16:00', '16:21:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('119', '3', '2026-07-04', '07:33:00', '16:58:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('120', '4', '2026-07-04', '07:09:00', '16:41:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('121', '5', '2026-07-04', '08:50:00', '16:51:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('122', '6', '2026-07-04', '07:59:00', '16:56:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('123', '7', '2026-07-04', '07:30:00', '16:51:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('124', '8', '2026-07-04', '08:04:00', '16:42:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('125', '9', '2026-07-04', '08:51:00', '16:25:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('126', '10', '2026-07-04', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('127', '11', '2026-07-04', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('128', '12', '2026-07-04', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('129', '13', '2026-07-04', '08:42:00', '16:33:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('130', '14', '2026-07-04', '07:17:00', '16:57:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('131', '1', '2026-07-06', '07:38:00', '17:00:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('132', '2', '2026-07-06', '08:47:00', '16:52:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('133', '3', '2026-07-06', '07:35:00', '16:42:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('134', '4', '2026-07-06', '07:40:00', '16:42:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('135', '5', '2026-07-06', '07:29:00', '16:44:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('136', '7', '2026-07-06', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('137', '8', '2026-07-06', '08:16:00', '16:41:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('138', '9', '2026-07-06', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('139', '10', '2026-07-06', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('140', '11', '2026-07-06', '07:21:00', '16:17:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('141', '12', '2026-07-06', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('142', '13', '2026-07-06', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('143', '14', '2026-07-06', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('144', '1', '2026-07-07', '07:48:00', '16:38:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('145', '2', '2026-07-07', '08:59:00', '16:05:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('146', '3', '2026-07-07', '07:02:00', '16:48:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('147', '4', '2026-07-07', '07:41:00', '16:52:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('148', '5', '2026-07-07', '07:01:00', '16:08:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('149', '6', '2026-07-07', '07:58:00', '16:26:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('150', '7', '2026-07-07', '07:04:00', '16:06:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('151', '8', '2026-07-07', '07:22:00', '16:37:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('152', '9', '2026-07-07', '07:27:00', '16:37:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('153', '10', '2026-07-07', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('154', '12', '2026-07-07', '07:06:00', '16:17:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('155', '13', '2026-07-07', '07:44:00', '16:36:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('156', '14', '2026-07-07', '08:04:00', '16:25:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('157', '1', '2026-07-08', '07:05:00', '16:42:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('158', '2', '2026-07-08', '08:51:00', '16:39:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('159', '3', '2026-07-08', '07:03:00', '16:46:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('160', '4', '2026-07-08', '07:43:00', '16:31:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('161', '5', '2026-07-08', '07:13:00', '16:06:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('162', '6', '2026-07-08', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('163', '7', '2026-07-08', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('164', '8', '2026-07-08', '08:12:00', '16:32:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('165', '9', '2026-07-08', '08:26:00', '17:00:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('166', '10', '2026-07-08', '07:44:00', '16:24:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('167', '11', '2026-07-08', '07:22:00', '16:39:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('168', '12', '2026-07-08', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('169', '14', '2026-07-08', '07:35:00', '16:45:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('170', '1', '2026-07-09', '07:34:00', '16:18:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('171', '2', '2026-07-09', '08:17:00', '16:14:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('172', '3', '2026-07-09', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('173', '4', '2026-07-09', '07:59:00', '16:05:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('174', '5', '2026-07-09', '07:06:00', '16:32:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('175', '6', '2026-07-09', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('176', '7', '2026-07-09', '07:53:00', '16:19:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('177', '9', '2026-07-09', '07:42:00', '16:54:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('178', '10', '2026-07-09', '07:26:00', '16:21:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('179', '11', '2026-07-09', '08:24:00', '16:08:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('180', '12', '2026-07-09', '08:59:00', '16:03:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('181', '13', '2026-07-09', '07:13:00', '16:49:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('182', '14', '2026-07-09', '07:58:00', '16:33:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('183', '1', '2026-07-10', '08:58:00', '16:42:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('184', '2', '2026-07-10', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('185', '3', '2026-07-10', '08:23:00', '16:21:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('186', '4', '2026-07-10', '07:57:00', '16:24:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('187', '5', '2026-07-10', '08:20:00', '16:32:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('188', '6', '2026-07-10', '07:57:00', '16:04:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('189', '8', '2026-07-10', '07:31:00', '16:33:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('190', '9', '2026-07-10', '07:47:00', '16:14:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('191', '10', '2026-07-10', '07:20:00', '16:07:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('192', '11', '2026-07-10', '07:03:00', '16:58:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('193', '12', '2026-07-10', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('194', '13', '2026-07-10', '07:57:00', '16:08:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('195', '14', '2026-07-10', '08:53:00', '16:47:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('196', '1', '2026-07-11', '08:00:00', '16:35:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('197', '2', '2026-07-11', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('198', '3', '2026-07-11', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('199', '5', '2026-07-11', '07:50:00', '16:26:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('200', '7', '2026-07-11', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('201', '8', '2026-07-11', '08:46:00', '16:59:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('202', '9', '2026-07-11', '07:32:00', '16:57:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('203', '10', '2026-07-11', '07:25:00', '16:37:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('204', '11', '2026-07-11', '07:52:00', '16:13:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('205', '12', '2026-07-11', '08:51:00', '16:26:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('206', '13', '2026-07-11', '07:44:00', '16:11:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('207', '14', '2026-07-11', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('208', '1', '2026-07-13', '08:37:00', '16:53:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('209', '2', '2026-07-13', '07:55:00', '16:36:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('210', '3', '2026-07-13', '08:55:00', '16:33:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('211', '4', '2026-07-13', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('212', '5', '2026-07-13', '07:11:00', '16:29:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('213', '6', '2026-07-13', '08:47:00', '16:06:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('214', '7', '2026-07-13', '08:16:00', '16:28:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('215', '8', '2026-07-13', '07:29:00', '16:04:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('216', '9', '2026-07-13', '08:33:00', '16:07:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('217', '10', '2026-07-13', '08:10:00', '16:57:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('218', '11', '2026-07-13', '07:27:00', '16:39:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('219', '12', '2026-07-13', '08:52:00', '16:50:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('220', '13', '2026-07-13', '08:36:00', '16:16:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('221', '14', '2026-07-13', '07:30:00', '16:47:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('222', '1', '2026-07-14', '08:54:00', '16:32:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('223', '2', '2026-07-14', '08:04:00', '16:33:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('224', '3', '2026-07-14', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('225', '4', '2026-07-14', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('226', '5', '2026-07-14', '07:00:00', '16:04:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('227', '6', '2026-07-14', '08:19:00', '16:48:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('228', '7', '2026-07-14', '08:36:00', '16:25:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('229', '8', '2026-07-14', '07:27:00', '16:55:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('230', '9', '2026-07-14', '07:02:00', '16:41:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('231', '10', '2026-07-14', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('232', '11', '2026-07-14', '08:50:00', '16:33:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('233', '12', '2026-07-14', '07:21:00', '16:06:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('234', '1', '2026-07-15', '08:40:00', '16:25:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('235', '2', '2026-07-15', '09:00:00', '16:07:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('236', '3', '2026-07-15', '07:27:00', '16:42:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('237', '4', '2026-07-15', '08:20:00', '16:36:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('238', '5', '2026-07-15', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('239', '6', '2026-07-15', '07:57:00', '16:31:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('240', '7', '2026-07-15', '07:26:00', '16:40:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('241', '8', '2026-07-15', '08:55:00', '16:15:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('242', '9', '2026-07-15', '08:16:00', '16:06:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('243', '10', '2026-07-15', '08:39:00', '16:16:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('244', '11', '2026-07-15', '07:37:00', '16:08:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('245', '12', '2026-07-15', '08:02:00', '16:37:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('246', '13', '2026-07-15', '07:07:00', '16:28:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('247', '14', '2026-07-15', '07:59:00', '16:21:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('248', '1', '2026-07-16', '07:39:00', '16:13:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('249', '2', '2026-07-16', '07:34:00', '16:33:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('250', '3', '2026-07-16', '07:57:00', '16:09:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('251', '4', '2026-07-16', '07:16:00', '16:20:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('252', '5', '2026-07-16', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('253', '6', '2026-07-16', '07:41:00', '16:00:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('254', '7', '2026-07-16', '08:30:00', '16:42:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('255', '8', '2026-07-16', '08:29:00', '16:50:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('256', '9', '2026-07-16', '07:26:00', '16:35:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('257', '10', '2026-07-16', '07:24:00', '16:19:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('258', '12', '2026-07-16', '07:10:00', '16:45:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('259', '13', '2026-07-16', '08:26:00', '16:07:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('260', '14', '2026-07-16', '08:51:00', '16:09:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('261', '1', '2026-07-17', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('262', '2', '2026-07-17', '07:41:00', '16:20:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('263', '3', '2026-07-17', '08:12:00', '16:15:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('264', '4', '2026-07-17', '07:26:00', '16:52:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('265', '5', '2026-07-17', '08:32:00', '16:11:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('266', '6', '2026-07-17', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('267', '7', '2026-07-17', '08:04:00', '16:33:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('268', '8', '2026-07-17', '07:10:00', '16:15:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('269', '10', '2026-07-17', '08:54:00', '16:59:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('270', '11', '2026-07-17', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('271', '12', '2026-07-17', '08:54:00', '17:00:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('272', '13', '2026-07-17', '08:13:00', '16:59:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('273', '14', '2026-07-17', '07:50:00', '16:46:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('274', '1', '2026-07-18', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('275', '3', '2026-07-18', '08:38:00', '16:34:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('276', '4', '2026-07-18', '08:05:00', '16:05:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('277', '6', '2026-07-18', '08:04:00', '16:37:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('278', '7', '2026-07-18', '07:46:00', '16:11:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('279', '8', '2026-07-18', '08:10:00', '16:37:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('280', '9', '2026-07-18', '07:49:00', '16:22:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('281', '10', '2026-07-18', '07:20:00', '16:14:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('282', '11', '2026-07-18', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('283', '12', '2026-07-18', '08:57:00', '17:00:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('284', '13', '2026-07-18', '08:39:00', '16:59:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('285', '14', '2026-07-18', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('286', '1', '2026-07-20', '07:45:00', '16:55:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('287', '2', '2026-07-20', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('288', '3', '2026-07-20', '07:24:00', '16:18:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('289', '4', '2026-07-20', '08:34:00', '16:50:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('290', '5', '2026-07-20', '07:14:00', '16:26:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('291', '6', '2026-07-20', '07:48:00', '16:24:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('292', '7', '2026-07-20', '08:23:00', '16:36:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('293', '8', '2026-07-20', '07:32:00', '16:01:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('294', '9', '2026-07-20', '08:01:00', '16:39:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('295', '10', '2026-07-20', '08:09:00', '16:50:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('296', '11', '2026-07-20', '07:58:00', '16:45:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('297', '12', '2026-07-20', '08:08:00', '16:54:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('298', '13', '2026-07-20', '08:46:00', '16:02:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('299', '14', '2026-07-20', '09:00:00', '16:46:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('300', '2', '2026-07-21', '08:18:00', '16:58:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('301', '3', '2026-07-21', '08:26:00', '16:00:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('302', '4', '2026-07-21', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('303', '5', '2026-07-21', '08:35:00', '16:26:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('304', '6', '2026-07-21', '08:05:00', '16:26:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('305', '7', '2026-07-21', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('306', '8', '2026-07-21', '08:46:00', '16:27:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('307', '9', '2026-07-21', '07:41:00', '16:35:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('308', '10', '2026-07-21', '07:10:00', '16:22:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('309', '11', '2026-07-21', '08:19:00', '16:54:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('310', '12', '2026-07-21', '08:12:00', '16:51:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('311', '14', '2026-07-21', '07:22:00', '16:27:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('312', '1', '2026-07-22', '07:26:00', '16:32:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('313', '2', '2026-07-22', '08:47:00', '16:56:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('314', '3', '2026-07-22', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('315', '4', '2026-07-22', '07:27:00', '16:44:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('316', '5', '2026-07-22', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('317', '6', '2026-07-22', '08:05:00', '16:08:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('318', '7', '2026-07-22', '08:03:00', '16:28:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('319', '8', '2026-07-22', '07:09:00', '16:38:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('320', '9', '2026-07-22', '08:13:00', '16:22:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('321', '10', '2026-07-22', '08:31:00', '16:32:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('322', '11', '2026-07-22', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('323', '12', '2026-07-22', '07:36:00', '16:16:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('324', '13', '2026-07-22', '08:48:00', '16:50:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('325', '14', '2026-07-22', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('326', '1', '2026-07-23', '07:13:00', '16:17:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('327', '2', '2026-07-23', '07:23:00', '16:24:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('328', '3', '2026-07-23', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('329', '4', '2026-07-23', '08:09:00', '16:06:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('330', '5', '2026-07-23', '07:19:00', '16:32:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('331', '6', '2026-07-23', '08:08:00', '16:45:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('332', '7', '2026-07-23', '08:36:00', '16:43:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('333', '8', '2026-07-23', '08:57:00', '16:39:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('334', '9', '2026-07-23', '08:47:00', '16:17:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('335', '10', '2026-07-23', '08:14:00', '16:01:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('336', '11', '2026-07-23', '07:20:00', '16:42:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('337', '12', '2026-07-23', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('338', '13', '2026-07-23', '07:50:00', '16:36:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('339', '14', '2026-07-23', '08:04:00', '16:01:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('340', '1', '2026-07-24', '07:07:00', '16:01:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('341', '2', '2026-07-24', '08:51:00', '16:45:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('342', '3', '2026-07-24', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('343', '4', '2026-07-24', NULL, NULL, 'sakit', 'Sakit', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('344', '5', '2026-07-24', '07:19:00', '16:54:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('345', '6', '2026-07-24', '07:04:00', '16:55:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('346', '7', '2026-07-24', '08:20:00', '16:21:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('347', '8', '2026-07-24', '08:23:00', '16:23:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('348', '9', '2026-07-24', '08:14:00', '16:16:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('349', '10', '2026-07-24', '09:00:00', '16:11:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('350', '11', '2026-07-24', '07:57:00', '16:54:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('351', '12', '2026-07-24', NULL, NULL, 'izin', 'Izin keperluan pribadi', NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('352', '13', '2026-07-24', '07:21:00', '16:10:00', 'hadir', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `absensi` (`id`, `karyawan_id`, `tanggal`, `jam_masuk`, `jam_pulang`, `status`, `keterangan`, `lampiran`, `verified_by`, `created_at`, `updated_at`) VALUES ('353', '14', '2026-07-24', '08:47:00', '16:31:00', 'terlambat', NULL, NULL, NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
+-- Structure for table `detail_penggajian` --
+DROP TABLE IF EXISTS `detail_penggajian`;
+CREATE TABLE `detail_penggajian` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `penggajian_id` bigint unsigned NOT NULL,
+  `komponen_gaji_id` bigint unsigned DEFAULT NULL,
+  `nama_komponen` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipe` enum('penghasilan','potongan') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nilai` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `detail_penggajian_penggajian_id_foreign` (`penggajian_id`),
+  KEY `detail_penggajian_komponen_gaji_id_foreign` (`komponen_gaji_id`),
+  CONSTRAINT `detail_penggajian_komponen_gaji_id_foreign` FOREIGN KEY (`komponen_gaji_id`) REFERENCES `komponen_gaji` (`id`),
+  CONSTRAINT `detail_penggajian_penggajian_id_foreign` FOREIGN KEY (`penggajian_id`) REFERENCES `penggajian` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Table: jabatan
-CREATE TABLE IF NOT EXISTS jabatan (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nama_jabatan VARCHAR(100) NOT NULL,
-    level INT DEFAULT 1 COMMENT '1=staf, 2=spv, 3=manajer, 4=direktur',
-    gaji_pokok DECIMAL(12,2) DEFAULT 0.00,
-    tunjangan DECIMAL(12,2) DEFAULT 0.00,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Data for table `detail_penggajian` --
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('1', '1', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('2', '1', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('3', '1', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('4', '1', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('5', '1', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('6', '1', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('7', '2', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('8', '2', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('9', '2', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('10', '2', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('11', '2', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('12', '2', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('13', '2', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('14', '3', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('15', '3', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('16', '3', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('17', '3', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('18', '3', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('19', '3', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('20', '3', NULL, 'Denda Keterlambatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('21', '4', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('22', '4', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('23', '4', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('24', '4', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('25', '4', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('26', '4', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('27', '4', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('28', '5', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('29', '5', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('30', '5', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('31', '5', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('32', '5', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('33', '5', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('34', '5', NULL, 'Denda Keterlambatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('35', '6', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('36', '6', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('37', '6', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('38', '6', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('39', '6', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('40', '6', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('41', '6', NULL, 'Denda Keterlambatan', 'potongan', '50000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('42', '7', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('43', '7', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('44', '7', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('45', '7', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('46', '7', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('47', '7', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('48', '7', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('49', '8', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('50', '8', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('51', '8', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('52', '8', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('53', '8', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('54', '8', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('55', '8', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('56', '9', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('57', '9', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('58', '9', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('59', '9', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('60', '9', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('61', '9', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('62', '9', NULL, 'Denda Keterlambatan', 'potongan', '25000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('63', '10', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('64', '10', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('65', '10', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('66', '10', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('67', '10', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('68', '10', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('69', '10', NULL, 'Denda Keterlambatan', 'potongan', '50000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('70', '11', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('71', '11', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('72', '11', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('73', '11', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('74', '11', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('75', '11', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('76', '11', NULL, 'Denda Keterlambatan', 'potongan', '50000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('77', '12', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('78', '12', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('79', '12', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('80', '12', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('81', '12', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('82', '12', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('83', '12', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('84', '13', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('85', '13', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('86', '13', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('87', '13', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('88', '13', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('89', '13', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('90', '13', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('91', '14', '1', 'Tunjangan Jabatan', 'penghasilan', '500000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('92', '14', '2', 'Tunjangan Transportasi', 'penghasilan', '300000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('93', '14', '3', 'Uang Makan', 'penghasilan', '350000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('94', '14', '4', 'Tunjangan Kesehatan', 'penghasilan', '200000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('95', '14', '5', 'BPJS Ketenagakerjaan', 'potongan', '150000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('96', '14', '6', 'BPJS Kesehatan', 'potongan', '100000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `detail_penggajian` (`id`, `penggajian_id`, `komponen_gaji_id`, `nama_komponen`, `tipe`, `nilai`, `created_at`, `updated_at`) VALUES ('97', '14', NULL, 'Denda Keterlambatan', 'potongan', '75000.00', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+
+-- Structure for table `import_logs` --
+DROP TABLE IF EXISTS `import_logs`;
+CREATE TABLE `import_logs` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `tipe_import` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_baris` int NOT NULL DEFAULT '0',
+  `berhasil` int NOT NULL DEFAULT '0',
+  `gagal` int NOT NULL DEFAULT '0',
+  `error_message` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `import_logs_user_id_foreign` (`user_id`),
+  CONSTRAINT `import_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Table: satuan_kerja
-CREATE TABLE IF NOT EXISTS satuan_kerja (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nama_divisi VARCHAR(100) NOT NULL,
-    singkatan VARCHAR(50) DEFAULT NULL,
-    keterangan TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Structure for table `jabatan` --
+DROP TABLE IF EXISTS `jabatan`;
+CREATE TABLE `jabatan` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nama_jabatan` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `level` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gaji_pokok` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `jabatan` --
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('1', 'Direktur', 'Direksi', '15000000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('2', 'Manager', 'Manager', '8000000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('3', 'Supervisor', 'Supervisor', '6000000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('4', 'Staff Senior', 'Staff', '5000000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('5', 'Staff', 'Staff', '4500000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('6', 'Admin', 'Staff', '4200000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('7', 'Magang', 'Magang', '2500000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `jabatan` (`id`, `nama_jabatan`, `level`, `gaji_pokok`, `created_at`, `updated_at`) VALUES ('8', 'Administrator', 'Staff', '5000000.00', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+
+-- Structure for table `karyawan` --
+DROP TABLE IF EXISTS `karyawan`;
+CREATE TABLE `karyawan` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nip` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_lengkap` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tempat_lahir` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
+  `jenis_kelamin` enum('L','P') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_telepon` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agama` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pendidikan_terakhir` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status_perkawinan` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tanggal_masuk` date NOT NULL,
+  `status_kepegawaian` enum('tetap','kontrak','magang','honorer') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'kontrak',
+  `jabatan_id` bigint unsigned NOT NULL,
+  `satuan_kerja_id` bigint unsigned NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aktif` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `karyawan_nip_unique` (`nip`),
+  KEY `karyawan_jabatan_id_foreign` (`jabatan_id`),
+  KEY `karyawan_satuan_kerja_id_foreign` (`satuan_kerja_id`),
+  CONSTRAINT `karyawan_jabatan_id_foreign` FOREIGN KEY (`jabatan_id`) REFERENCES `jabatan` (`id`),
+  CONSTRAINT `karyawan_satuan_kerja_id_foreign` FOREIGN KEY (`satuan_kerja_id`) REFERENCES `satuan_kerja` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `karyawan` --
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('1', 'ADM001', 'Administrator', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-07-24', 'kontrak', '8', '3', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('2', 'MGR001', 'Manager HRD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-07-24', 'kontrak', '2', '3', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('3', 'STF001', 'Karyawan Staff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-07-24', 'kontrak', '5', '3', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('4', 'STF002', 'Rina Amelia', 'Jakarta', '1999-03-15', 'P', 'Jl. Merdeka No. 10', '081234567801', 'rinaamelia@hr.com', 'Islam', 'S1', 'Belum Kawin', '2023-01-10', 'tetap', '5', '2', NULL, '1', '2026-07-24 10:53:57', '2026-07-24 10:53:57');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('5', 'STF003', 'Budi Santoso', 'Bandung', '1998-07-22', 'L', 'Jl. Diponegoro No. 5', '081234567802', 'budisantoso@hr.com', 'Islam', 'S1', 'Kawin', '2022-06-01', 'tetap', '4', '3', NULL, '1', '2026-07-24 10:53:57', '2026-07-24 10:53:57');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('6', 'STF004', 'Citra Dewi', 'Surabaya', '2000-11-08', 'P', 'Jl. Sudirman No. 15', '081234567803', 'citradewi@hr.com', 'Hindu', 'S1', 'Belum Kawin', '2024-03-15', 'kontrak', '5', '4', NULL, '1', '2026-07-24 10:53:58', '2026-07-24 10:53:58');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('7', 'MGR002', 'Denny Pratama', 'Medan', '1990-05-12', 'L', 'Jl. Gatot Subroto No. 8', '081234567804', 'dennypratama@hr.com', 'Kristen', 'S2', 'Kawin', '2019-08-20', 'tetap', '2', '4', NULL, '1', '2026-07-24 10:53:59', '2026-07-24 10:53:59');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('8', 'SPV001', 'Eka Wijaya', 'Yogyakarta', '1995-09-30', 'P', 'Jl. Malioboro No. 3', '081234567805', 'ekawijaya@hr.com', 'Islam', 'S1', 'Kawin', '2021-02-01', 'tetap', '3', '5', NULL, '1', '2026-07-24 10:53:59', '2026-07-24 10:53:59');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('9', 'STF005', 'Fajar Hidayat', 'Semarang', '2001-01-18', 'L', 'Jl. Pandanaran No. 12', '081234567806', 'fajarhidayat@hr.com', 'Islam', 'D3', 'Belum Kawin', '2024-07-01', 'magang', '7', '3', NULL, '1', '2026-07-24 10:54:00', '2026-07-24 10:54:00');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('10', 'STF006', 'Gita Permata', 'Makassar', '1997-04-25', 'P', 'Jl. Veteran No. 7', '081234567807', 'gitapermata@hr.com', 'Islam', 'S1', 'Kawin', '2022-11-15', 'tetap', '5', '6', NULL, '1', '2026-07-24 10:54:01', '2026-07-24 10:54:01');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('11', 'ADM002', 'Hendra Gunawan', 'Bogor', '1996-08-14', 'L', 'Jl. Raya Bogor No. 20', '081234567808', 'hendragunawan@hr.com', 'Kristen', 'S1', 'Kawin', '2020-05-10', 'tetap', '6', '8', NULL, '1', '2026-07-24 10:54:01', '2026-07-24 10:54:01');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('12', 'STF007', 'Indah Lestari', 'Malang', '1999-12-01', 'P', 'Jl. Ijen No. 4', '081234567809', 'indahlestari@hr.com', 'Islam', 'S1', 'Belum Kawin', '2023-09-01', 'kontrak', '5', '5', NULL, '1', '2026-07-24 10:54:01', '2026-07-24 10:54:01');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('13', 'STF008', 'Joko Wibowo', 'Solo', '2000-06-19', 'L', 'Jl. Slamet Riyadi No. 9', '081234567810', 'jokowibowo@hr.com', 'Islam', 'D3', 'Belum Kawin', '2024-01-15', 'kontrak', '5', '7', NULL, '1', '2026-07-24 10:54:02', '2026-07-24 10:54:02');
+INSERT INTO `karyawan` (`id`, `nip`, `nama_lengkap`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `no_telepon`, `email`, `agama`, `pendidikan_terakhir`, `status_perkawinan`, `tanggal_masuk`, `status_kepegawaian`, `jabatan_id`, `satuan_kerja_id`, `foto`, `aktif`, `created_at`, `updated_at`) VALUES ('14', 'SPV002', 'Kartika Sari', 'Palembang', '1994-03-08', 'P', 'Jl. Kolonel Burlian No. 2', '081234567811', 'kartikasari@hr.com', 'Islam', 'S2', 'Kawin', '2020-10-01', 'tetap', '3', '7', NULL, '1', '2026-07-24 10:54:02', '2026-07-24 10:54:02');
+
+-- Structure for table `komponen_gaji` --
+DROP TABLE IF EXISTS `komponen_gaji`;
+CREATE TABLE `komponen_gaji` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `kode` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipe` enum('penghasilan','potongan') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sifat` enum('tetap','variable') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nilai` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `aktif` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `komponen_gaji_kode_unique` (`kode`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `komponen_gaji` --
+INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `keterangan`, `aktif`, `created_at`, `updated_at`) VALUES ('1', 'TUNJ-JAB', 'Tunjangan Jabatan', 'penghasilan', 'tetap', '500000.00', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `keterangan`, `aktif`, `created_at`, `updated_at`) VALUES ('2', 'TUNJ-TRANS', 'Tunjangan Transportasi', 'penghasilan', 'tetap', '300000.00', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `keterangan`, `aktif`, `created_at`, `updated_at`) VALUES ('3', 'TUNJ-MAKAN', 'Uang Makan', 'penghasilan', 'tetap', '350000.00', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `keterangan`, `aktif`, `created_at`, `updated_at`) VALUES ('4', 'TUNJ-KESEHATAN', 'Tunjangan Kesehatan', 'penghasilan', 'tetap', '200000.00', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `keterangan`, `aktif`, `created_at`, `updated_at`) VALUES ('5', 'BPJS', 'BPJS Ketenagakerjaan', 'potongan', 'tetap', '150000.00', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `komponen_gaji` (`id`, `kode`, `nama`, `tipe`, `sifat`, `nilai`, `keterangan`, `aktif`, `created_at`, `updated_at`) VALUES ('6', 'BPJS-KES', 'BPJS Kesehatan', 'potongan', 'tetap', '100000.00', NULL, '1', '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+
+-- Structure for table `migrations` --
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `migrations` --
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('1', '2024_01_01_000001_create_jabatan_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('2', '2024_01_01_000002_create_satuan_kerja_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('3', '2024_01_01_000003_create_karyawan_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('4', '2024_01_01_000004_create_users_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('5', '2024_01_01_000005_create_komponen_gaji_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('6', '2024_01_01_000006_create_import_logs_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('7', '2024_01_01_000007_create_absensi_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('8', '2024_01_01_000008_create_pengajuan_izin_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('9', '2024_01_01_000009_create_tugas_karyawan_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('10', '2024_01_01_000010_create_penilaian_kinerja_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('11', '2024_01_01_000011_create_penggajian_table', '1');
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES ('12', '2024_01_01_000012_create_detail_penggajian_table', '1');
+
+-- Structure for table `password_reset_tokens` --
+DROP TABLE IF EXISTS `password_reset_tokens`;
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Table: users
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(120) NOT NULL,
-    email VARCHAR(120) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'atasan', 'karyawan') NOT NULL DEFAULT 'karyawan',
-    karyawan_id BIGINT UNSIGNED DEFAULT NULL,
-    remember_token VARCHAR(100) DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_role (role),
-    INDEX idx_karyawan_id (karyawan_id)
+-- Structure for table `pengajuan_izin` --
+DROP TABLE IF EXISTS `pengajuan_izin`;
+CREATE TABLE `pengajuan_izin` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `karyawan_id` bigint unsigned NOT NULL,
+  `jenis` enum('izin','sakit','cuti','dinas_luar') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tanggal_mulai` date NOT NULL,
+  `tanggal_selesai` date NOT NULL,
+  `alasan` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lampiran` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('menunggu','disetujui','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'menunggu',
+  `approved_by` bigint unsigned DEFAULT NULL,
+  `catatan_approval` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pengajuan_izin_karyawan_id_foreign` (`karyawan_id`),
+  KEY `pengajuan_izin_approved_by_foreign` (`approved_by`),
+  CONSTRAINT `pengajuan_izin_approved_by_foreign` FOREIGN KEY (`approved_by`) REFERENCES `users` (`id`),
+  CONSTRAINT `pengajuan_izin_karyawan_id_foreign` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `pengajuan_izin` --
+INSERT INTO `pengajuan_izin` (`id`, `karyawan_id`, `jenis`, `tanggal_mulai`, `tanggal_selesai`, `alasan`, `lampiran`, `status`, `approved_by`, `catatan_approval`, `created_at`, `updated_at`) VALUES ('1', '1', 'cuti', '2026-07-19', '2026-07-22', 'Keperluan keluarga', NULL, 'disetujui', '2', 'Disetujui', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `pengajuan_izin` (`id`, `karyawan_id`, `jenis`, `tanggal_mulai`, `tanggal_selesai`, `alasan`, `lampiran`, `status`, `approved_by`, `catatan_approval`, `created_at`, `updated_at`) VALUES ('2', '2', 'cuti', '2026-07-06', '2026-07-08', 'Acara pribadi', NULL, 'menunggu', '2', 'Disetujui', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `pengajuan_izin` (`id`, `karyawan_id`, `jenis`, `tanggal_mulai`, `tanggal_selesai`, `alasan`, `lampiran`, `status`, `approved_by`, `catatan_approval`, `created_at`, `updated_at`) VALUES ('3', '3', 'cuti', '2026-07-08', '2026-07-11', 'Kurang enak badan', NULL, 'menunggu', '2', 'Disetujui', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `pengajuan_izin` (`id`, `karyawan_id`, `jenis`, `tanggal_mulai`, `tanggal_selesai`, `alasan`, `lampiran`, `status`, `approved_by`, `catatan_approval`, `created_at`, `updated_at`) VALUES ('4', '4', 'izin', '2026-07-13', '2026-07-15', 'Acara pribadi', NULL, 'ditolak', '2', 'Disetujui', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `pengajuan_izin` (`id`, `karyawan_id`, `jenis`, `tanggal_mulai`, `tanggal_selesai`, `alasan`, `lampiran`, `status`, `approved_by`, `catatan_approval`, `created_at`, `updated_at`) VALUES ('5', '5', 'sakit', '2026-07-04', '2026-07-06', 'Kurang enak badan', NULL, 'menunggu', '2', 'Disetujui', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+
+-- Structure for table `penggajian` --
+DROP TABLE IF EXISTS `penggajian`;
+CREATE TABLE `penggajian` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `karyawan_id` bigint unsigned NOT NULL,
+  `periode` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tanggal_penggajian` date NOT NULL,
+  `gaji_pokok` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_tunjangan` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_potongan` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_lembur` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_bonus` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_insentif` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_pajak` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `total_diterima` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `status` enum('draft','dikonfirmasi','dibayar') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',
+  `dibuat_oleh` bigint unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `penggajian_karyawan_id_foreign` (`karyawan_id`),
+  KEY `penggajian_dibuat_oleh_foreign` (`dibuat_oleh`),
+  CONSTRAINT `penggajian_dibuat_oleh_foreign` FOREIGN KEY (`dibuat_oleh`) REFERENCES `users` (`id`),
+  CONSTRAINT `penggajian_karyawan_id_foreign` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `penggajian` --
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('1', '1', '2026-06', '2026-07-20', '5000000.00', '1350000.00', '250000.00', '450000.00', '0.00', '0.00', '317500.00', '6232500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('2', '2', '2026-06', '2026-07-21', '8000000.00', '1350000.00', '325000.00', '400000.00', '0.00', '0.00', '467500.00', '8957500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('3', '3', '2026-06', '2026-07-19', '4500000.00', '1350000.00', '350000.00', '50000.00', '0.00', '0.00', '292500.00', '5257500.00', 'dikonfirmasi', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('4', '4', '2026-06', '2026-07-20', '4500000.00', '1350000.00', '325000.00', '350000.00', '200000.00', '150000.00', '292500.00', '5932500.00', 'dikonfirmasi', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('5', '5', '2026-06', '2026-07-23', '5000000.00', '1350000.00', '350000.00', '0.00', '200000.00', '150000.00', '317500.00', '6032500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('6', '6', '2026-06', '2026-07-23', '4500000.00', '1350000.00', '300000.00', '50000.00', '0.00', '0.00', '292500.00', '5307500.00', 'dikonfirmasi', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('7', '7', '2026-06', '2026-07-22', '8000000.00', '1350000.00', '325000.00', '0.00', '200000.00', '150000.00', '467500.00', '8907500.00', 'dibayar', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('8', '8', '2026-06', '2026-07-21', '6000000.00', '1350000.00', '325000.00', '200000.00', '200000.00', '150000.00', '367500.00', '7207500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('9', '9', '2026-06', '2026-07-21', '2500000.00', '1350000.00', '275000.00', '0.00', '0.00', '0.00', '192500.00', '3382500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('10', '10', '2026-06', '2026-07-20', '4500000.00', '1350000.00', '300000.00', '50000.00', '200000.00', '150000.00', '292500.00', '5657500.00', 'dikonfirmasi', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('11', '11', '2026-06', '2026-07-21', '4200000.00', '1350000.00', '300000.00', '350000.00', '200000.00', '150000.00', '277500.00', '5672500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('12', '12', '2026-06', '2026-07-22', '4500000.00', '1350000.00', '325000.00', '400000.00', '0.00', '0.00', '292500.00', '5632500.00', 'dibayar', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('13', '13', '2026-06', '2026-07-21', '4500000.00', '1350000.00', '325000.00', '200000.00', '0.00', '0.00', '292500.00', '5432500.00', 'dibayar', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penggajian` (`id`, `karyawan_id`, `periode`, `tanggal_penggajian`, `gaji_pokok`, `total_tunjangan`, `total_potongan`, `total_lembur`, `total_bonus`, `total_insentif`, `total_pajak`, `total_diterima`, `status`, `dibuat_oleh`, `created_at`, `updated_at`) VALUES ('14', '14', '2026-06', '2026-07-21', '6000000.00', '1350000.00', '325000.00', '200000.00', '200000.00', '150000.00', '367500.00', '7207500.00', 'draft', '1', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+
+-- Structure for table `penilaian_kinerja` --
+DROP TABLE IF EXISTS `penilaian_kinerja`;
+CREATE TABLE `penilaian_kinerja` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `karyawan_id` bigint unsigned NOT NULL,
+  `penilai_id` bigint unsigned NOT NULL,
+  `periode` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tanggal_penilaian` date NOT NULL,
+  `nilai_disiplin` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_kualitas` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_kuantitas` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_tanggung_jawab` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_kerjasama` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_inisiatif` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_ketepatan_waktu` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_target` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `nilai_akhir` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `catatan` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `penilaian_kinerja_karyawan_id_foreign` (`karyawan_id`),
+  KEY `penilaian_kinerja_penilai_id_foreign` (`penilai_id`),
+  CONSTRAINT `penilaian_kinerja_karyawan_id_foreign` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `penilaian_kinerja_penilai_id_foreign` FOREIGN KEY (`penilai_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `penilaian_kinerja` --
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('1', '1', '2', '2026-06', '2026-07-16', '72.29', '87.33', '77.02', '89.60', '86.70', '79.04', '89.55', '85.99', '83.44', 'Hasil kerja memuaskan', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('2', '3', '2', '2026-06', '2026-07-17', '82.06', '72.88', '97.68', '96.52', '83.85', '81.89', '98.00', '100.66', '89.19', 'Hasil kerja memuaskan', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('3', '4', '2', '2026-06', '2026-07-15', '100.94', '76.78', '78.53', '87.00', '85.62', '93.98', '87.68', '73.78', '85.54', 'Kerja tim sudah baik', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('4', '5', '2', '2026-06', '2026-07-20', '94.72', '77.51', '78.68', '71.06', '95.63', '89.11', '99.58', '79.82', '85.76', 'Perlu peningkatan pada disiplin waktu', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('5', '8', '2', '2026-06', '2026-07-18', '93.42', '83.16', '93.37', '96.13', '91.32', '69.09', '73.73', '73.23', '84.18', 'Perlu peningkatan pada disiplin waktu', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('6', '9', '2', '2026-06', '2026-07-18', '77.10', '97.00', '93.06', '81.26', '97.82', '87.08', '94.20', '81.83', '88.67', 'Perlu peningkatan pada disiplin waktu', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('7', '10', '2', '2026-06', '2026-07-18', '70.56', '82.57', '86.02', '89.29', '78.90', '72.00', '100.76', '85.79', '83.24', 'Perlu peningkatan pada disiplin waktu', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('8', '11', '2', '2026-06', '2026-07-16', '87.93', '86.77', '94.14', '71.06', '85.52', '73.66', '88.09', '100.80', '86.00', 'Kinerja baik, tingkatkan lagi', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('9', '12', '2', '2026-06', '2026-07-23', '89.51', '77.46', '96.81', '76.58', '74.60', '76.95', '86.03', '77.98', '81.99', 'Hasil kerja memuaskan', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `penilaian_kinerja` (`id`, `karyawan_id`, `penilai_id`, `periode`, `tanggal_penilaian`, `nilai_disiplin`, `nilai_kualitas`, `nilai_kuantitas`, `nilai_tanggung_jawab`, `nilai_kerjasama`, `nilai_inisiatif`, `nilai_ketepatan_waktu`, `nilai_target`, `nilai_akhir`, `catatan`, `created_at`, `updated_at`) VALUES ('10', '13', '2', '2026-06', '2026-07-23', '87.01', '95.13', '85.16', '83.77', '87.72', '84.08', '74.62', '96.09', '86.70', 'Kerja tim sudah baik', '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+
+-- Structure for table `satuan_kerja` --
+DROP TABLE IF EXISTS `satuan_kerja`;
+CREATE TABLE `satuan_kerja` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `nama_unit` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `singkatan` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data for table `satuan_kerja` --
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('1', 'Direksi', 'DIR', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('2', 'Sumber Daya Manusia', 'SDM', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('3', 'Teknologi Informasi', 'IT', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('4', 'Keuangan', 'KEU', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('5', 'Pemasaran', 'MKT', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('6', 'Operasional', 'OPS', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('7', 'Produksi', 'PROD', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `satuan_kerja` (`id`, `nama_unit`, `singkatan`, `keterangan`, `created_at`, `updated_at`) VALUES ('8', 'Umum', 'UMUM', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+
+-- Structure for table `sessions` --
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE `sessions` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint unsigned DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sessions_user_id_index` (`user_id`),
+  KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Table: karyawan
-CREATE TABLE IF NOT EXISTS karyawan (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT UNSIGNED DEFAULT NULL,
-    nik VARCHAR(20) NOT NULL UNIQUE,
-    nama_lengkap VARCHAR(150) NOT NULL,
-    jenis_kelamin ENUM('Laki-laki', 'Perempuan') DEFAULT 'Laki-laki',
-    tanggal_lahir DATE DEFAULT NULL,
-    alamat TEXT,
-    no_telp VARCHAR(20),
-    tanggal_masuk DATE DEFAULT NULL,
-    jabatan_id INT DEFAULT NULL,
-    satuan_kerja_id INT DEFAULT NULL,
-    aktif TINYINT(1) DEFAULT 1,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
-    FOREIGN KEY (jabatan_id) REFERENCES jabatan(id) ON DELETE SET NULL,
-    FOREIGN KEY (satuan_kerja_id) REFERENCES satuan_kerja(id) ON DELETE SET NULL,
-    INDEX idx_nik (nik),
-    INDEX idx_jabatan_id (jabatan_id),
-    INDEX idx_satuan_kerja_id (satuan_kerja_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Structure for table `tugas_karyawan` --
+DROP TABLE IF EXISTS `tugas_karyawan`;
+CREATE TABLE `tugas_karyawan` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `karyawan_id` bigint unsigned NOT NULL,
+  `pemberi_tugas` bigint unsigned NOT NULL,
+  `judul` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci,
+  `tenggat` date DEFAULT NULL,
+  `prioritas` enum('rendah','sedang','tinggi') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'sedang',
+  `status` enum('diberikan','dikerjakan','selesai','ditolak') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'diberikan',
+  `catatan_penyelesaian` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tugas_karyawan_karyawan_id_foreign` (`karyawan_id`),
+  KEY `tugas_karyawan_pemberi_tugas_foreign` (`pemberi_tugas`),
+  CONSTRAINT `tugas_karyawan_karyawan_id_foreign` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `tugas_karyawan_pemberi_tugas_foreign` FOREIGN KEY (`pemberi_tugas`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Table: komponen_gaji
-CREATE TABLE IF NOT EXISTS komponen_gaji (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nama_komponen VARCHAR(100) NOT NULL,
+-- Data for table `tugas_karyawan` --
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('1', '1', '2', 'Rekrutmen karyawan baru', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-09', 'tinggi', 'dikerjakan', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('2', '2', '2', 'Optimasi proses produksi', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-13', 'rendah', 'diberikan', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('3', '3', '2', 'Audit inventaris', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-16', 'tinggi', 'selesai', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('4', '4', '2', 'Optimasi proses produksi', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-15', 'tinggi', 'dikerjakan', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('5', '6', '2', 'Menyusun laporan bulanan', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-07', 'tinggi', 'dikerjakan', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('6', '7', '2', 'Membuat presentasi project', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-09', 'sedang', 'selesai', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('7', '8', '2', 'Update sistem database', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-07-31', 'tinggi', 'selesai', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('8', '10', '2', 'Analisis data penjualan', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-10', 'rendah', 'diberikan', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('9', '12', '2', 'Update sistem database', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-08', 'sedang', 'dikerjakan', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('10', '13', '2', 'Optimasi proses produksi', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-07-31', 'sedang', 'diberikan', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
+INSERT INTO `tugas_karyawan` (`id`, `karyawan_id`, `pemberi_tugas`, `judul`, `deskripsi`, `tenggat`, `prioritas`, `status`, `catatan_penyelesaian`, `created_at`, `updated_at`) VALUES ('11', '14', '2', 'Analisis data penjualan', 'Harap dikerjakan dengan baik dan tepat waktu', '2026-08-14', 'sedang', 'selesai', NULL, '2026-07-24 10:54:04', '2026-07-24 10:54:04');
 
-    jenis ENUM('earning', 'potongan') NOT NULL,
-    tipe ENUM('tetap', 'variabel') NOT NULL,
-    nominal_default DECIMAL(12,2) DEFAULT 0.00,
-    keterangan TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_jenis (jenis),
-    INDEX idx_tipe (tipe)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Structure for table `users` --
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('admin','atasan','karyawan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'karyawan',
+  `karyawan_id` bigint unsigned DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_karyawan_id_foreign` (`karyawan_id`),
+  CONSTRAINT `users_karyawan_id_foreign` FOREIGN KEY (`karyawan_id`) REFERENCES `karyawan` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Table: import_logs
-CREATE TABLE IF NOT EXISTS import_logs (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT UNSIGNED NOT NULL,
-    nama_file VARCHAR(150) NOT NULL,
-    jumlah_data INT DEFAULT 0,
-    status_import ENUM('berhasil', 'sebagian', 'gagal') DEFAULT 'gagal',
-    tanggal_import DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    INDEX idx_user_id (user_id),
-    INDEX idx_tanggal_import (tanggal_import)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Table: absensi
-CREATE TABLE IF NOT EXISTS absensi (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    karyawan_id BIGINT UNSIGNED NOT NULL,
-    tanggal DATE NOT NULL,
-    jam_masuk TIME DEFAULT NULL,
-    jam_keluar TIME DEFAULT NULL,
-    status ENUM('hadir', 'izin', 'sakit', 'alpha') DEFAULT 'hadir',
-    keterlambatan_menit INT DEFAULT 0,
-    lembur_menit INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (karyawan_id) REFERENCES karyawan(id) ON DELETE CASCADE,
-    INDEX idx_karyawan_id (karyawan_id),
-    INDEX idx_tanggal (tanggal),
-    INDEX idx_status (status),
-    UNIQUE KEY unique_attendance (karyawan_id, tanggal)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Table: pengajuan_izin
-CREATE TABLE IF NOT EXISTS pengajuan_izin (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    karyawan_id BIGINT UNSIGNED NOT NULL,
-    jenis ENUM('cuti', 'izin', 'sakit') NOT NULL,
-    tanggal_mulai DATE NOT NULL,
-    tanggal_selesai DATE NOT NULL,
-    alasan TEXT,
-    status_pengajuan ENUM('pending', 'disetujui', 'ditolak') DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (karyawan_id) REFERENCES karyawan(id) ON DELETE CASCADE,
-    INDEX idx_karyawan_id (karyawan_id),
-    INDEX idx_status_pengajuan (status_pengajuan),
-    INDEX idx_tanggal (tanggal_mulai, tanggal_selesai)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Table: tugas_karyawan
-CREATE TABLE IF NOT EXISTS tugas_karyawan (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    karyawan_id BIGINT UNSIGNED NOT NULL,
-    manajer_id BIGINT UNSIGNED NOT NULL,
-    judul_tugas VARCHAR(150) NOT NULL,
-    deskripsi TEXT,
-    deadline DATE DEFAULT NULL,
-    status_tugas ENUM('belum', 'proses', 'selesai', 'revisi') DEFAULT 'belum',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (karyawan_id) REFERENCES karyawan(id) ON DELETE CASCADE,
-    FOREIGN KEY (manajer_id) REFERENCES karyawan(id) ON DELETE CASCADE,
-    INDEX idx_karyawan_id (karyawan_id),
-    INDEX idx_manajer_id (manajer_id),
-    INDEX idx_status_tugas (status_tugas)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Table: penilaian_kinerja
-CREATE TABLE IF NOT EXISTS penilaian_kinerja (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    karyawan_id BIGINT UNSIGNED NOT NULL,
-    manajer_id BIGINT UNSIGNED NOT NULL,
-    periode VARCHAR(20) NOT NULL COMMENT 'Format: 2026-Q2, 2026-S1',
-    skor_kualitas DECIMAL(4,2) DEFAULT 0.00,
-    skor_kuantitas DECIMAL(4,2) DEFAULT 0.00,
-    nilai_akhir DECIMAL(4,2) DEFAULT 0.00,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (karyawan_id) REFERENCES karyawan(id) ON DELETE CASCADE,
-    FOREIGN KEY (manajer_id) REFERENCES karyawan(id) ON DELETE CASCADE,
-    INDEX idx_karyawan_id (karyawan_id),
-    INDEX idx_manajer_id (manajer_id),
-    INDEX idx_periode (periode),
-    UNIQUE KEY unique_evaluation (karyawan_id, periode)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Table: penggajian
-CREATE TABLE IF NOT EXISTS penggajian (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    karyawan_id BIGINT UNSIGNED NOT NULL,
-    periode CHAR(7) NOT NULL COMMENT 'Format: YYYY-MM',
-    total_earning DECIMAL(14,2) DEFAULT 0.00,
-    total_potongan DECIMAL(14,2) DEFAULT 0.00,
-    take_home_pay DECIMAL(14,2) DEFAULT 0.00,
-    tanggal_pembayaran DATE DEFAULT NULL,
-    status_approval ENUM('draft', 'menunggu', 'disetujui', 'dibayar') DEFAULT 'draft',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (karyawan_id) REFERENCES karyawan(id) ON DELETE CASCADE,
-    INDEX idx_karyawan_id (karyawan_id),
-    INDEX idx_periode (periode),
-    INDEX idx_status_approval (status_approval),
-    UNIQUE KEY unique_payroll (karyawan_id, periode)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Table: detail_penggajian
-CREATE TABLE IF NOT EXISTS detail_penggajian (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    penggajian_id BIGINT UNSIGNED NOT NULL,
-    komponen_gaji_id INT NOT NULL,
-    nominal DECIMAL(12,2) DEFAULT 0.00,
-    keterangan VARCHAR(200),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (penggajian_id) REFERENCES penggajian(id) ON DELETE CASCADE,
-    FOREIGN KEY (komponen_gaji_id) REFERENCES komponen_gaji(id) ON DELETE CASCADE,
-    INDEX idx_penggajian_id (penggajian_id),
-    INDEX idx_komponen_gaji_id (komponen_gaji_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Insert Sample Data for Jabatan
-INSERT INTO jabatan (nama_jabatan, level, gaji_pokok, tunjangan) VALUES
-('Administrator', 4, 5000000, 1000000),
-('Manager', 3, 8000000, 2000000),
-('Senior Programmer', 2, 8500000, 1500000),
-('Programmer', 1, 6000000, 800000),
-('Staff IT', 1, 4500000, 500000),
-('Staff HRD', 1, 4000000, 500000);
-
--- Insert Sample Data for Satuan Kerja
-INSERT INTO satuan_kerja (nama_divisi, singkatan, keterangan) VALUES
-('Divisi Pengembangan Aplikasi', 'DEV', 'Mengelola pengembangan aplikasi web dan mobile'),
-('Divisi Infrastruktur dan Jaringan', 'INFRA', 'Mengelola server dan jaringan'),
-('Divisi SDM dan Umum', 'HR', 'Mengelola sumber daya manusia dan administrasi'),
-('Divisi Pemasaran dan Penjualan', 'MARKETING', 'Mengelola pemasaran dan penjualan');
-
--- Insert Sample Data for Komponen Gaji
-INSERT INTO komponen_gaji (nama_komponen, jenis, tipe, nominal_default, keterangan) VALUES
-('Tunjangan Makan', 'earning', 'tetap', 600000, 'Tunjangan makan harian'),
-('Tunjangan Transport', 'earning', 'tetap', 500000, 'Tunjangan transportasi'),
-('Lembur', 'earning', 'variabel', 0, 'Pembayaran lembur per jam'),
-('Bonus Kinerja', 'earning', 'variabel', 0, 'Bonus berdasarkan penilaian kinerja'),
-('Potongan Keterlambatan', 'potongan', 'variabel', 0, 'Potongan karena keterlambatan'),
-('BPJS Kesehatan', 'potongan', 'tetap', 0, 'Potongan BPJS Kesehatan 1%'),
-('BPJS Ketenagakerjaan', 'potongan', 'tetap', 0, 'Potongan BPJS TK 2%'),
-('Pajak PPh 21', 'potongan', 'variabel', 0, 'Potongan pajak penghasilan');
-
--- Insert Sample Users (password: password - bcrypt hash)
-INSERT INTO users (name, email, password, role) VALUES
-('Admin HRIS', 'admin@hr.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
-('Manager HRD', 'atasan@hr.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'atasan'),
-('Karyawan Staff', 'karyawan@hr.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'karyawan');
-
--- Insert Sample Karyawan
-INSERT INTO karyawan (user_id, nik, nama_lengkap, jenis_kelamin, tanggal_lahir, no_telp, tanggal_masuk, jabatan_id, satuan_kerja_id, aktif) VALUES
-(1, 'ADM001', 'Administrator', 'Laki-laki', '1990-01-01', '081234567890', '2020-01-01', 1, 3, 1),
-(2, 'MGR001', 'Manager HRD', 'Laki-laki', '1985-05-15', '081234567891', '2019-03-01', 2, 3, 1),
-(3, 'STF001', 'Karyawan Staff', 'Laki-laki', '1995-08-20', '081234567892', '2021-06-01', 5, 1, 1);
-
--- Update users with karyawan_id
-UPDATE users SET karyawan_id = 1 WHERE id = 1;
-UPDATE users SET karyawan_id = 2 WHERE id = 2;
-UPDATE users SET karyawan_id = 3 WHERE id = 3;
-
--- Display summary
--- SELECT 'Database created successfully!' AS Status;
+-- Data for table `users` --
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('1', 'Admin HRIS', 'admin@hr.com', '$2y$12$q3KOdxmhalyJm5Mpw2IjFeH9oUBKIJKLEUY5buMZvfCmxYuEN6KQW', 'admin', '1', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('2', 'Manager HRD', 'atasan@hr.com', '$2y$12$4bDVHKfLPaI3eJUQFpnlbOMpejWSYF7qBf20eZGMB5KvmlLTobc5G', 'atasan', '2', NULL, '2026-07-24 10:53:56', '2026-07-24 10:53:56');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('3', 'Karyawan Staff', 'karyawan@hr.com', '$2y$12$YQQU.c7w3oE0u7L8SSx9COn7qL8LiAV.Vunnl1DJN9DLc3MFtpJ5u', 'karyawan', '3', NULL, '2026-07-24 10:53:57', '2026-07-24 10:53:57');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('4', 'Rina Amelia', 'rinaamelia@hr.com', '$2y$12$0Cf0Jk..QDBMEaVkMO77NeK1ZrwnVzl1dDZUEdqIVpxpNgN1tg7xO', 'karyawan', '4', NULL, '2026-07-24 10:53:57', '2026-07-24 10:53:57');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('5', 'Budi Santoso', 'budisantoso@hr.com', '$2y$12$9le1inMpJfZyNsCYMrjHrO.aRdGw0xGQfXVn1U/Jh2x9d7HwIuTga', 'karyawan', '5', NULL, '2026-07-24 10:53:58', '2026-07-24 10:53:58');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('6', 'Citra Dewi', 'citradewi@hr.com', '$2y$12$EhOrCA4XTyRqMQmt6vhBt..VJjUcV9oRvfWKrKvKqRHsSj24kHI8.', 'karyawan', '6', NULL, '2026-07-24 10:53:59', '2026-07-24 10:53:59');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('7', 'Denny Pratama', 'dennypratama@hr.com', '$2y$12$mViZ6FD.XHNsbeInqKZlvudtU2tFkjcdd3IhrNO9TBKRP78SfodJu', 'karyawan', '7', NULL, '2026-07-24 10:53:59', '2026-07-24 10:53:59');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('8', 'Eka Wijaya', 'ekawijaya@hr.com', '$2y$12$wKZv6fUQdqGBzIHL19F7fut59s6hH2bcFF4JeYjuP3aTnBY.hd2mi', 'karyawan', '8', NULL, '2026-07-24 10:54:00', '2026-07-24 10:54:00');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('9', 'Fajar Hidayat', 'fajarhidayat@hr.com', '$2y$12$cpHKx9OS9X0yt.fvY9.eA.Pibj5UP/1fvROL70lZjUxC5Ba.lRtzu', 'karyawan', '9', NULL, '2026-07-24 10:54:01', '2026-07-24 10:54:01');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('10', 'Gita Permata', 'gitapermata@hr.com', '$2y$12$WHUZMzKgYlknWZIqmgpggeaE676ckLl.ARvh2x53MeXzBCZjEn0gK', 'karyawan', '10', NULL, '2026-07-24 10:54:01', '2026-07-24 10:54:01');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('11', 'Hendra Gunawan', 'hendragunawan@hr.com', '$2y$12$rUipvy3EA9PtSt.vEq76M.y5DzjQDnMMLhgt93XthZysoeyOSaByi', 'karyawan', '11', NULL, '2026-07-24 10:54:01', '2026-07-24 10:54:01');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('12', 'Indah Lestari', 'indahlestari@hr.com', '$2y$12$0rGF6Ns3ICfu8AYJfH8JOudHKpnO8WLgnrl2n18VZkJcOFpYZFSVe', 'karyawan', '12', NULL, '2026-07-24 10:54:02', '2026-07-24 10:54:02');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('13', 'Joko Wibowo', 'jokowibowo@hr.com', '$2y$12$re.eZ9WgNHf5f7mpln27I.8AEJ5K5w7OMAlZu.Idmurcbx7WNzCju', 'karyawan', '13', NULL, '2026-07-24 10:54:02', '2026-07-24 10:54:02');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `karyawan_id`, `remember_token`, `created_at`, `updated_at`) VALUES ('14', 'Kartika Sari', 'kartikasari@hr.com', '$2y$12$KSyU6lInNoX47T7OKXKP7.sggcmKq3Hq..BzeCs1xnkknJw7qrQuK', 'karyawan', '14', NULL, '2026-07-24 10:54:03', '2026-07-24 10:54:03');
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-
