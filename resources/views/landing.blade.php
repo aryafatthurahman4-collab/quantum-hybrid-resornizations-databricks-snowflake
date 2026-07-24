@@ -127,7 +127,7 @@
     <!-- Footer -->
     <footer class="border-t border-slate-900 py-8 bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-            <p>&copy; {{ date('Y') }} HRIS ITK &mdash; Institut Teknologi Kalimantan. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} HRIS ITK &mdash; Institute Technology Computer. All rights reserved.</p>
         </div>
     </footer>
 </body>

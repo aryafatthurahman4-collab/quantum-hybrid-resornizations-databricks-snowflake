@@ -110,7 +110,7 @@
         </div>
 
         <p class="text-center text-xs text-slate-500 mt-6">
-            &copy; {{ date('Y') }} HRIS ITK &mdash; Institut Teknologi Kalimantan
+            &copy; {{ date('Y') }} HRIS ITK &mdash; Institute Technology Computer
         </p>
     </div>
 
