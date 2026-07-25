@@ -1,0 +1,48 @@
+# Python & Virtual Environments
+.venv/
+.venv13/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Laravel
+laravel-dashboard/vendor/
+laravel-dashboard/.env
+laravel-dashboard/storage/*.key
+laravel-dashboard/storage/framework/cache/data/*
+laravel-dashboard/storage/framework/sessions/*
+laravel-dashboard/storage/framework/testing/*
+laravel-dashboard/storage/framework/views/*
+laravel-dashboard/storage/logs/*
+laravel-dashboard/bootstrap/cache/*
+laravel-dashboard/public/storage
+laravel-dashboard/.phpunit.result.cache
+laravel-dashboard/Homestead.json
+laravel-dashboard/Homestead.yaml
+laravel-dashboard/.env.backup
+laravel-dashboard/.env.production
+
+# Angular & Node
+angular-dashboard/node_modules/
+angular-dashboard/dist/
+angular-dashboard/.angular/
+angular-dashboard/coverage/
+angular-dashboard/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

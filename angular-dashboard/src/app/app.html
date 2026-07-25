@@ -1,0 +1,280 @@
+<div class="quantum-app">
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="atom-icon">⚛</div>
+      <div>
+        <h1 class="brand-title">Quantum Hybrid Diffusion</h1>
+        <p class="brand-subtitle">PennyLane • D-Wave • Qiskit • TF-Quantum • Laravel • Angular</p>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <button [class.active]="activeTab() === 'dashboard'" (click)="setTab('dashboard')">
+        <span class="icon">📊</span> Overview
+      </button>
+      <button [class.active]="activeTab() === 'models'" (click)="setTab('models')">
+        <span class="icon">🧠</span> Quantum Models (8)
+      </button>
+      <button [class.active]="activeTab() === 'circuits'" (click)="setTab('circuits')">
+        <span class="icon">⚡</span> Circuit Inspector
+      </button>
+      <button [class.active]="activeTab() === 'sampling'" (click)="setTab('sampling')">
+        <span class="icon">🎯</span> Live Sampling
+      </button>
+      <button [class.active]="activeTab() === 'laravel'" (click)="setTab('laravel')">
+        <span class="icon">🌐</span> Laravel Bridge
+      </button>
+    </nav>
+    <div class="user-badge">
+      <span class="status-dot online"></span>
+      <span>aryafatthurahman4-collab</span>
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main class="content-container">
+    <!-- OVERVIEW DASHBOARD TAB -->
+    <section *ngIf="activeTab() === 'dashboard'" class="tab-content fade-in">
+      <div class="hero-card">
+        <div class="hero-text">
+          <h2>Quantum-Classical Hybrid Generative Intelligence</h2>
+          <p>
+            Integrates state-of-the-art quantum neural network layers, variational circuits, and quantum annealing with classical diffusion architectures for superior sample generation and geometric tensor optimization.
+          </p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <span class="num">8</span>
+            <span class="label">Integrated Frameworks</span>
+          </div>
+          <div class="stat-pill">
+            <span class="num">5,000+</span>
+            <span class="label">Total Qubits (D-Wave)</span>
+          </div>
+          <div class="stat-pill">
+            <span class="num">98.1%</span>
+            <span class="label">Max Fidelity</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hardware Nodes Grid -->
+      <h3 class="section-title">Quantum Hardware & Simulation Backends</h3>
+      <div class="grid-4">
+        <div *ngFor="let node of hardwareNodes()" class="node-card">
+          <div class="node-header">
+            <span class="node-name">{{ node.name }}</span>
+            <span class="badge" [class.badge-online]="node.status==='Online'" [class.badge-sim]="node.status==='Simulating'" [class.badge-standby]="node.status==='Standby'">
+              {{ node.status }}
+            </span>
+          </div>
+          <div class="node-details">
+            <div class="detail-row">
+              <span class="dim">Provider:</span>
+              <span class="val">{{ node.provider }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="dim">Qubits:</span>
+              <span class="val highlight">{{ node.qubitsAvailable }} Qubits</span>
+            </div>
+            <div class="detail-row">
+              <span class="dim">Gate Fidelity:</span>
+              <span class="val green">{{ node.fidelity }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="dim">Latency:</span>
+              <span class="val">{{ node.ping }} ms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Model Preview -->
+      <h3 class="section-title mt-6">Active Quantum Diffusion Architecture</h3>
+      <div class="card active-model-card">
+        <div class="model-header-row">
+          <div>
+            <span class="category-tag">{{ selectedModel().category }}</span>
+            <h3>{{ selectedModel().name }}</h3>
+          </div>
+          <span class="badge badge-primary">{{ selectedModel().badge }}</span>
+        </div>
+        <p class="model-desc">{{ selectedModel().description }}</p>
+        <div class="model-metrics-grid">
+          <div class="metric-box">
+            <span class="m-label">Quantum Qubits</span>
+            <span class="m-val">{{ selectedModel().qubits }} Qubits</span>
+          </div>
+          <div class="metric-box">
+            <span class="m-label">Generation Accuracy</span>
+            <span class="m-val accent">{{ selectedModel().accuracy }}</span>
+          </div>
+          <div class="metric-box">
+            <span class="m-label">Sampling Velocity</span>
+            <span class="m-val">{{ selectedModel().speed }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODELS CATALOG TAB -->
+    <section *ngIf="activeTab() === 'models'" class="tab-content fade-in">
+      <h2 class="page-title">Integrated Quantum Repositories & Models</h2>
+      <p class="page-sub">Explore the 8 integrated quantum computing algorithms and hybrid architectures.</p>
+
+      <div class="grid-2 mt-4">
+        <div *ngFor="let m of models()" class="card model-select-card" [class.selected]="m.id === selectedModelId()" (click)="selectModel(m.id)">
+          <div class="card-head">
+            <span class="category-tag">{{ m.category }}</span>
+            <span class="badge" [class.badge-active]="m.id===selectedModelId()">{{ m.badge }}</span>
+          </div>
+          <h3 class="m-title">{{ m.name }}</h3>
+          <p class="m-desc">{{ m.description }}</p>
+          <div class="card-foot">
+            <span>⚡ {{ m.qubits }} Qubits</span>
+            <span>🎯 {{ m.accuracy }}</span>
+            <span>⏱ {{ m.speed }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CIRCUIT INSPECTOR TAB -->
+    <section *ngIf="activeTab() === 'circuits'" class="tab-content fade-in">
+      <h2 class="page-title">Quantum Circuit Inspector & Ansatz Visualizer</h2>
+      <div class="card circuit-box mt-4">
+        <div class="circuit-header">
+          <h3>PennyLane Parameterized Circuit Architecture</h3>
+          <span class="badge badge-online">4-Qubit Strongly Entangling Layers</span>
+        </div>
+        <div class="circuit-diagram">
+          <div class="qubit-line">
+            <span class="wire-label">|q₀⟩</span>
+            <span class="gate gate-h">H</span>
+            <span class="gate gate-rx">RX(θ₀)</span>
+            <span class="gate gate-cnot">●──────</span>
+            <span class="gate gate-rz">RZ(φ₀)</span>
+            <span class="wire-end">M₀</span>
+          </div>
+          <div class="qubit-line">
+            <span class="wire-label">|q₁⟩</span>
+            <span class="gate gate-h">H</span>
+            <span class="gate gate-ry">RY(θ₁)</span>
+            <span class="gate gate-cnot">┼─┼────</span>
+            <span class="gate gate-rx">RX(φ₁)</span>
+            <span class="wire-end">M₁</span>
+          </div>
+          <div class="qubit-line">
+            <span class="wire-label">|q₂⟩</span>
+            <span class="gate gate-h">H</span>
+            <span class="gate gate-rx">RX(θ₂)</span>
+            <span class="gate gate-cnot">┼─●────</span>
+            <span class="gate gate-rz">RZ(φ₂)</span>
+            <span class="wire-end">M₂</span>
+          </div>
+          <div class="qubit-line">
+            <span class="wire-label">|q₃⟩</span>
+            <span class="gate gate-h">H</span>
+            <span class="gate gate-ry">RY(θ₃)</span>
+            <span class="gate gate-cnot">●─┼────</span>
+            <span class="gate gate-rx">RX(φ₃)</span>
+            <span class="wire-end">M₃</span>
+          </div>
+        </div>
+        <div class="circuit-footer mt-4">
+          <div class="param-tag">Entanglement: Full Ring Topology</div>
+          <div class="param-tag">Encoding: Amplitude & Qubit Feature Map</div>
+          <div class="param-tag">Quantum Gradient: Parameter Shift Rule</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE SAMPLING TAB -->
+    <section *ngIf="activeTab() === 'sampling'" class="tab-content fade-in">
+      <h2 class="page-title">Live Quantum Diffusion Generator</h2>
+
+      <div class="grid-2 mt-4">
+        <!-- Controls Card -->
+        <div class="card">
+          <h3>Diffusion Hyperparameters</h3>
+          <div class="form-group mt-3">
+            <label>Diffusion Timesteps (T): {{ timesteps() }}</label>
+            <input type="range" min="100" max="2000" step="100" [value]="timesteps()" (input)="timesteps.set(+$any($event.target).value)">
+          </div>
+          <div class="form-group">
+            <label>Guidance Scale (s): {{ guidanceScale() }}</label>
+            <input type="range" min="1.0" max="15.0" step="0.5" [value]="guidanceScale()" (input)="guidanceScale.set(+$any($event.target).value)">
+          </div>
+          <div class="form-group">
+            <label>Quantum Qubits: {{ qubitsCount() }}</label>
+            <select [value]="qubitsCount()" (change)="qubitsCount.set(+$any($event.target).value)">
+              <option [value]="2">2 Qubits (Fast)</option>
+              <option [value]="4">4 Qubits (Standard)</option>
+              <option [value]="8">8 Qubits (High Expressivity)</option>
+              <option [value]="16">16 Qubits (Large Scale)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Quantum Circuit Ansatz</label>
+            <select [value]="quantumAnsatz()" (change)="quantumAnsatz.set($any($event.target).value)">
+              <option value="strongly_entangling">Strongly Entangling Layers</option>
+              <option value="qaoa_ansatz">QAOA Circuit Ansatz</option>
+              <option value="zz_feature_map">ZZ Feature Map Encoding</option>
+              <option value="random_layers">Random Quantum Circuit</option>
+            </select>
+          </div>
+          <button class="btn btn-primary btn-block mt-4" (click)="runQuantumSampling()" [disabled]="isSampling()">
+            <span *ngIf="!isSampling()">🚀 Launch Quantum Sampling</span>
+            <span *ngIf="isSampling()">⚛ Simulating Step {{ samplingProgress() }}%...</span>
+          </button>
+        </div>
+
+        <!-- Real-time Progress Monitor Card -->
+        <div class="card">
+          <h3>Quantum State & Fidelity Log</h3>
+          <div class="progress-bar-container mt-3">
+            <div class="progress-fill" [style.width.%]="samplingProgress()"></div>
+          </div>
+          <div class="fidelity-display mt-3">
+            <span class="dim">Current Gate Fidelity:</span>
+            <span class="fidelity-val">{{ currentStepFidelity() }}</span>
+          </div>
+          <div class="samples-log mt-4">
+            <div *ngFor="let item of generatedSamples()" class="log-row">
+              <span class="step-num">Step {{ item.step }}</span>
+              <span class="noise">{{ item.noiseLevel }}</span>
+              <span class="time">{{ item.time }}</span>
+            </div>
+            <div *ngIf="generatedSamples().length === 0" class="empty-log">
+              Click "Launch Quantum Sampling" to begin quantum diffusion inference.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LARAVEL BRIDGE TAB -->
+    <section *ngIf="activeTab() === 'laravel'" class="tab-content fade-in">
+      <h2 class="page-title">Laravel 11 Backend & Artisan API Bridge</h2>
+      <div class="card mt-4">
+        <h3>Integrated PHP Laravel API Architecture</h3>
+        <p class="mt-2">
+          The <code>laravel-dashboard</code> package bridges Python PennyLane quantum routines with PHP artisan commands and Laravel controllers.
+        </p>
+        <div class="code-box mt-3">
+          <pre><code>// Execute Quantum Sampling from Laravel Artisan CLI:
+php artisan quantum:sample --model=custom-hybrid --steps=1000 --qubits=4
+
+// Laravel REST API Endpoints:
+GET  http://localhost:8000/api/quantum/models
+POST http://localhost:8000/api/quantum/generate
+GET  http://localhost:8000/api/quantum/hardware-status</code></pre>
+        </div>
+        <div class="laravel-status mt-4">
+          <span class="status-dot online"></span>
+          <span>Laravel Backend Status: <strong>Ready (PHP 8.3.30 + Artisan)</strong></span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

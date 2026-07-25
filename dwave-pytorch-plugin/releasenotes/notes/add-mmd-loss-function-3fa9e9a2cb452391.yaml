@@ -1,0 +1,10 @@
+---
+features:
+  - |
+    Add a ``MaximumMeanDiscrepancyLoss`` in ``dwave.plugins.torch.nn.loss`` for estimating the
+    squared maximum mean discrepancy (MMD) for a given kernel and two samples.
+    Its functional counterpart ``maximum_mean_discrepancy_loss`` is in
+    ``dwave.plugins.torch.nn.functional``.
+    Kernels reside in ``dwave.plugins.torch.nn.modules.kernels``. This enables, for example,
+    training discrete autoencoders to match the distribution of a target distribution (e.g., prior).
+

@@ -1,0 +1,170 @@
+# Copyright 2025 The TensorFlow Quantum Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# yamllint disable rule:line-length
+
+name: 'CI: build & test'
+run-name: Continuous integration build and test
+
+on:
+  pull_request:
+    branches:
+      - master
+
+  merge_group:
+    types:
+      - checks_requested
+
+env:
+  # Python version to use for actions/setup-python.
+  python-version: '3.11'
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{github.workflow}}-${{github.event.pull_request.number||github.ref}}
+
+permissions: read-all
+
+jobs:
+  format-and-lint-checks:
+    name: File format & lint checks
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out a copy of the TFQ git repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: ${{env.python-version}}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check code formatting
+        run: ./scripts/format_check.sh
+
+      - name: Check code lint
+        run: ./scripts/lint_all.sh
+
+  wheel-build:
+    name: Wheel test
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: ${{env.python-version}}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Bazel on CI
+        run: ./scripts/ci_install.sh
+
+      - name: Build Wheel Test
+        run: ./scripts/build_pip_package_test.sh
+
+      - name: Test Wheel
+        run: ./scripts/run_example.sh
+
+  bazel-tests:
+    name: Library tests
+    runs-on: linux-x86-n2-32
+    container:
+      image: us-docker.pkg.dev/ml-oss-artifacts-published/ml-public-container/ml-build:infrastructure-public-image-82c7ac59ba4b
+    timeout-minutes: 60
+    steps:
+      - name: Adjust the ml-build runner to our needs
+        run: |
+          # lsb-release (needed by setup-python) is missing in ml-build runners
+          sudo apt-get update && sudo apt-get install -y lsb-release
+          # This file, though it's empty, hangs the Bazel install step.
+          rm -f /etc/bazel.bazelrc
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: ${{env.python-version}}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Bazel on CI
+        run: ./scripts/ci_install.sh
+
+      - name: Configure CI TF
+        run: echo "Y\n" | ./configure.sh
+
+      - name: Full Library Test
+        run: ./scripts/test_all.sh
+
+  # 2024-11-30 [mhucka] temporarily turning off leak-tests because it produces
+  # false positives on GH that we can't immediately address. TODO: if updating
+  # TFQ to use Clang and the latest TF does not resolve this, find a way to
+  # skip the handful of failing tests and re-enable the rest of the msan tests.
+  #
+  # leak-tests:
+  #   name: Memory Leak tests
+  #   runs-on: ubuntu-22.04
+  #
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: actions/setup-python@v1
+  #       with:
+  #         python-version: '3.10'
+  #         architecture: 'x64'
+  #     - name: Install Bazel on CI
+  #       run: ./scripts/ci_install.sh
+  #     - name: Configure CI TF
+  #       run: echo "Y\n" | ./configure.sh
+  #     - name: Leak Test qsim and src
+  #       run: ./scripts/msan_test.sh
+
+  tutorials-test:
+    name: Tutorial tests
+    runs-on: linux-x86-n2-32
+    container:
+      image: us-docker.pkg.dev/ml-oss-artifacts-published/ml-public-container/ml-build:infrastructure-public-image-82c7ac59ba4b
+    timeout-minutes: 60
+    steps:
+      - name: Adjust the ml-build runner to our needs
+        run: |
+          # lsb-release (needed by setup-python) is missing in ml-build runners
+          sudo apt-get update && sudo apt-get install -y lsb-release
+          # This file, though it's empty, hangs the Bazel install step.
+          rm -f /etc/bazel.bazelrc
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: ${{env.python-version}}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Upgrade pip
+        run: pip install --upgrade pip
+
+      - name: Install Bazel on CI
+        run: ./scripts/ci_install.sh
+
+      - name: Build Wheel
+        run: ./scripts/build_pip_package_test.sh
+
+      - name: Test Notebooks
+        run: ./scripts/ci_validate_tutorials.sh

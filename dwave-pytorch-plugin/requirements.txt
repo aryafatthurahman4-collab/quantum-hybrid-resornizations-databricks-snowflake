@@ -1,0 +1,11 @@
+# skip numpy 2.4.0 due to a bug fixed in numpy#30500
+# TODO: remove the constraint once numpy 2.4.0 gets yanked
+numpy~=2.0,!=2.4.0
+
+torch==2.9.1
+dimod==0.12.21
+dwave-system==1.34.0
+dwave-hybrid==0.6.14
+
+# Development requirements
+reno==4.1.0

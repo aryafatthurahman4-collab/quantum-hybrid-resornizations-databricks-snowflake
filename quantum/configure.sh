@@ -1,0 +1,248 @@
+#!/bin/bash
+# Copyright 2020 The TensorFlow Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+
+set -uo pipefail
+
+PLATFORM="$(uname -s | tr 'A-Z' 'a-z')"
+ARCH=$(uname -m)
+
+# --- helpers ---------------------------------------------------------------
+function write_bazelrc() {
+  echo "${1}" >> .bazelrc
+}
+
+function write_tf_rc() {
+  echo "${1}" >> .tf_configure.bazelrc
+}
+
+function die() {
+  echo "ERROR: $*" >&2
+  exit 1
+}
+
+function is_macos() {
+  [[ "${PLATFORM}" == "darwin" ]]
+}
+
+function is_windows() {
+  [[ "${PLATFORM}" =~ msys_nt*|mingw*|cygwin*|uwin* ]]
+}
+
+function inside_docker() {
+  if [[ -f /.dockerenv ]]; then
+    return 1
+  elif [[ "${PLATFORM}" = "linux" ]] && grep -q docker /proc/1/cgroup; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+# --- parse args ------------------------------------------------------------
+USER_PY=""
+for arg in "$@"; do
+  case "$arg" in
+    --python=*) USER_PY="${arg#--python=}" ;;
+    *) echo "Unknown arg: $arg" ;;
+  esac
+done
+
+# --- choose interpreter (venv/conda/system) --------------------------------
+if [[ -n "${USER_PY}" ]]; then
+  # 1) Explicit --python=... flag
+  PY="${USER_PY}"
+elif [[ -n "${PYTHON_BIN_PATH:-}" ]]; then
+  # 2) Explicit environment override
+  PY="${PYTHON_BIN_PATH}"
+elif [[ -n "${CONDA_PREFIX:-}" && -x "${CONDA_PREFIX}/bin/python" ]]; then
+  # 3) Conda environment python, if available
+  PY="${CONDA_PREFIX}/bin/python"
+else
+  # 4) Fallback: system python3, but require >= 3.10
+  if ! command -v python3 >/dev/null 2>&1; then
+    die "python3 not found. Pass --python=/path/to/python3.10+ or set PYTHON_BIN_PATH."
+  fi
+
+  if ! python3 - <<'PY'
+import sys
+raise SystemExit(0 if sys.version_info[:2] >= (3, 10) else 1)
+PY
+  then
+    die "Python 3.10+ required for TensorFlow Quantum, but found " \
+      "$(python3 -V 2>&1). Pass --python=/path/to/python3.10+ or set PYTHON_BIN_PATH."
+  fi
+
+  PY="$(command -v python3)"
+fi
+
+# Normalize to an absolute path. Use Python to print sys.executable because
+# tools like pyenv use shim scripts that readlink would resolve to the script
+# itself, not the actual interpreter binary.
+PY_ABS="$("${PY}" -c 'import os,sys; print(os.path.abspath(sys.executable))')"
+PYTHON_BIN_PATH="${PY_ABS}"
+
+# --- identify ourselves (useful mainly when redirecting output) ------------
+echo "Configuring TensorFlow Quantum build."
+info_string="Running on a ${ARCH} $(uname -s) system"
+inside_docker && echo "${info_string}." || echo "${info_string} inside Docker."
+echo
+
+# --- choose CPU/GPU like upstream script (default CPU) ---------------------
+TF_NEED_CUDA=""
+y_for_cpu='Build against TensorFlow CPU backend? (Type n to use GPU) [Y/n] '
+while [[ -z "${TF_NEED_CUDA}" ]]; do
+  read -p "${y_for_cpu}" INPUT || true
+  case "${INPUT:-Y}" in
+    [Yy]* ) echo "CPU build selected."; TF_NEED_CUDA=0;;
+    [Nn]* ) echo "GPU build selected."; TF_NEED_CUDA=1;;
+    * ) echo "Please answer y or n.";;
+  esac
+done
+
+# For TF >= 2.1 this value isn’t actually consulted by TFQ,
+# but we keep a compatible prompt/flag.
+TF_CUDA_VERSION="12"
+
+# --- sanity: python is importable and has TF -------------------------------
+if [[ ! -x "${PYTHON_BIN_PATH}" ]]; then
+  die "${PYTHON_BIN_PATH} not found/executable."
+fi
+
+# Ensure TF is importable from system python (user should have installed it).
+echo "Next, you may see warnings printed by loading TensorFlow packages."
+echo "Do not be alarmed unless there are errors."
+tf_output=$("${PYTHON_BIN_PATH}" - <<'PY'
+import sys
+import os
+import glob
+
+try:
+    import tensorflow as tf
+    import tensorflow.sysconfig as sc
+except ImportError:
+    sys.exit(1)
+
+print(sc.get_include())
+
+lib_path = sc.get_lib()
+lib_dir = lib_path if os.path.isdir(lib_path) else os.path.dirname(lib_path)
+print(lib_dir)
+
+cands = (glob.glob(os.path.join(lib_dir, 'libtensorflow_framework.so*')) or
+         glob.glob(os.path.join(lib_dir, 'libtensorflow.so*')) or
+         glob.glob(os.path.join(lib_dir, '_pywrap_tensorflow_internal.*')))
+print(os.path.basename(cands[0]) if cands else 'libtensorflow_framework.so.2')
+PY
+)
+
+if [[ $? -ne 0 ]]; then
+  echo "ERROR: tensorflow not importable by Python (${PYTHON_BIN_PATH})" >&2
+  exit 1
+fi
+
+{
+  read -r HDR
+  read -r LIBDIR
+  read -r LIBNAME
+} <<< "${tf_output}"
+
+echo
+echo "Configuration values detected:"
+echo "  PYTHON_BIN_PATH=${PYTHON_BIN_PATH}"
+echo "  TF_HEADER_DIR=${HDR}"
+echo "  TF_SHARED_LIBRARY_DIR=${LIBDIR}"
+echo "  TF_SHARED_LIBRARY_NAME=${LIBNAME}"
+
+# --- start fresh -----------------------------------------------------------
+rm -f .bazelrc .tf_configure.bazelrc
+
+# --- write .tf_configure.bazelrc (repo_env for repository rules) -----------
+write_tf_rc "build --repo_env=PYTHON_BIN_PATH=${PYTHON_BIN_PATH}"
+write_tf_rc "build --repo_env=TF_HEADER_DIR=${HDR}"
+write_tf_rc "build --repo_env=TF_SHARED_LIBRARY_DIR=${LIBDIR}"
+write_tf_rc "build --repo_env=TF_SHARED_LIBRARY_NAME=${LIBNAME}"
+write_tf_rc "build --repo_env=TF_NEED_CUDA=${TF_NEED_CUDA}"
+
+# Make sure repo rules and sub-config see legacy Keras (keras 2 instead of Keras 3)
+write_tf_rc "build --repo_env=TF_USE_LEGACY_KERAS=1"
+
+
+# --- write .bazelrc (imports TF config  usual flags) -----------------
+write_bazelrc "# WARNING: this file (.bazelrc) is AUTOGENERATED and overwritten"
+write_bazelrc "# when configure.sh runs. Put customizations in .bazelrc.user."
+write_bazelrc ""
+write_bazelrc "try-import %workspace%/.tf_configure.bazelrc"
+write_bazelrc "common --experimental_repo_remote_exec"
+write_bazelrc "build --spawn_strategy=standalone"
+write_bazelrc "build --strategy=Genrule=standalone"
+write_bazelrc "build -c opt"
+write_bazelrc "build --cxxopt=-D_GLIBCXX_USE_CXX11_ABI=1"
+write_bazelrc "build --cxxopt=-std=c++17"
+write_bazelrc "build --action_env=TF_USE_LEGACY_KERAS=1"
+write_bazelrc "build --action_env=PYTHON_BIN_PATH=${PYTHON_BIN_PATH}"
+
+# rpath so the dynamic linker finds TF’s shared lib
+if ! is_windows; then
+  write_bazelrc "build --linkopt=-Wl,-rpath,${LIBDIR}"
+fi
+
+write_bazelrc ""
+
+# The following suppressions are for warnings coming from external dependencies.
+# They're most likely inconsequential or false positives. Since we can't fix
+# them, we suppress the warnings to reduce noise. Note: single quotes are needed
+# for the first two so that the $ anchors are preserved in the .bazelrc file.
+
+write_bazelrc 'build --per_file_copt=external/.*[.]c$@-Wno-deprecated-non-prototype'
+write_bazelrc 'build --host_per_file_copt=external/.*[.]c$@-Wno-deprecated-non-prototype'
+write_bazelrc "build --per_file_copt=external/com_google_protobuf/.*@-Wno-unused-function"
+write_bazelrc "build --host_per_file_copt=external/com_google_protobuf/.*@-Wno-unused-function"
+write_bazelrc "build --per_file_copt=external/com_google_protobuf/.*@-Wno-stringop-overflow"
+write_bazelrc "build --host_per_file_copt=external/com_google_protobuf/.*@-Wno-stringop-overflow"
+write_bazelrc "build --per_file_copt=external/eigen/.*@-Wno-maybe-uninitialized"
+write_bazelrc "build --host_per_file_copt=external/eigen/.*@-Wno-maybe-uninitialized"
+
+# The following warnings come from qsim.
+# TODO: fix the code in qsim & update TFQ to use the updated version.
+write_bazelrc "build --per_file_copt=tensorflow_quantum/core/ops/math_ops/tfq_.*@-Wno-deprecated-declarations"
+write_bazelrc "build --host_per_file_copt=tensorflow_quantum/core/ops/math_ops/tfq_.*@-Wno-deprecated-declarations"
+
+# CUDA toggle
+if [[ "${TF_NEED_CUDA}" == "1" ]]; then
+  write_tf_rc "build --repo_env=TF_CUDA_VERSION=${TF_CUDA_VERSION}"
+
+  write_bazelrc ""
+  write_bazelrc "build:cuda --define=using_cuda=true --define=using_cuda_nvcc=true"
+  write_bazelrc "build:cuda --@local_config_cuda//:enable_cuda"
+  write_bazelrc "build:cuda --crosstool_top=@local_config_cuda//crosstool:toolchain"
+  if is_windows; then
+    write_tf_rc "build --repo_env=CUDNN_INSTALL_PATH=C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${TF_CUDA_VERSION}"
+    write_tf_rc "build --repo_env=CUDA_TOOLKIT_PATH=C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v${TF_CUDA_VERSION}"
+  else
+    write_tf_rc "build --repo_env=CUDNN_INSTALL_PATH=/usr/lib/x86_64-linux-gnu"
+    write_tf_rc "build --repo_env=CUDA_TOOLKIT_PATH=/usr/local/cuda"
+  fi
+  write_bazelrc "build --config=cuda"
+  write_bazelrc "test --config=cuda"
+else
+  write_bazelrc "build --define=using_cuda=false"
+fi
+
+# Follow TensorFlow's approach and load an optional user bazelrc file.
+write_bazelrc ""
+write_bazelrc "try-import %workspace%/.bazelrc.user"
+
+echo "Wrote .tf_configure.bazelrc and .bazelrc successfully."
