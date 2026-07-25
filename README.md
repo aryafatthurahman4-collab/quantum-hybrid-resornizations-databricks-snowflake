@@ -7,10 +7,11 @@
 [![NVIDIA CUDA-Q](https://img.shields.io/badge/NVIDIA-CUDA--Q-76b900.svg)](https://developer.nvidia.com/cuda-quantum)
 [![TensorRT-LLM](https://img.shields.io/badge/NVIDIA-TensorRT--LLM-76b900.svg)](https://github.com/NVIDIA/TensorRT-LLM)
 [![PennyLane](https://img.shields.io/badge/PennyLane-0.38-purple.svg)](https://pennylane.ai/)
+[![IBM Qiskit](https://img.shields.io/badge/Qiskit-1.2%2B-6929c4.svg)](https://qiskit.org/)
 [![Laravel 11](https://img.shields.io/badge/Laravel-11-ff2d20.svg)](https://laravel.com/)
 [![Angular 18](https://img.shields.io/badge/Angular-18%2B-dd0031.svg)](https://angular.dev/)
 
-> **A Next-Generation Quantum-Classical Hybrid Engine** integrating **Databricks Zerobus Ingest SDK**, **Databricks Terraform SRA**, **NVIDIA CUDA-Q**, **NVIDIA TensorRT-LLM**, **PennyLane**, **Ingenii Quantum Networks**, **IBM Quantum Runtime**, **D-Wave Advantage Annealer**, **Shor's Quantum Factorization Algorithm**, **HRIS ITK Employee Management Suite**, **Laravel 11 API Backend**, and **Angular 18 Web Dashboard**.
+> **A Next-Generation Quantum-Classical Hybrid Architecture** integrating **Databricks Zerobus Ingest SDK**, **Databricks Terraform Security Reference Architecture (SRA)**, **NVIDIA CUDA-Q**, **NVIDIA TensorRT-LLM**, **PennyLane**, **Ingenii Quantum Hybrid Networks**, **IBM Quantum Runtime**, **D-Wave Advantage Annealer**, **Shor's Quantum Factorization Algorithm**, **Laravel 11 API Backend**, and **Angular 18 Web Dashboard**.
 
 Developed & Maintained by **Arya Fatthurahman** ([@aryafatthurahman4-collab](https://github.com/aryafatthurahman4-collab)) • *Artificial Intelligence Engineering*
 
@@ -20,7 +21,7 @@ Developed & Maintained by **Arya Fatthurahman** ([@aryafatthurahman4-collab](htt
 
 ```
                                     ┌─────────────────────────────────────────────────────────────┐
-                                    │    Angular 18 SPA  •  HRIS ITK  •  Laravel 11 API Backend   │
+                                    │      Angular 18 Web SPA  •  Laravel 11 API Engine Backend   │
                                     └──────────────────────────────┬──────────────────────────────┘
                                                                    │
                                                                    ▼
@@ -54,17 +55,17 @@ Developed & Maintained by **Arya Fatthurahman** ([@aryafatthurahman4-collab](htt
 - GPU-accelerated statevector evolution with CUDA Quantum kernels (`cudaq:nvidia`).
 - Text prompt embedding guidance accelerated by TensorRT-LLM (FP8 / INT4 precision).
 
-### 4. 💼 HRIS ITK Employee Management Suite (`laravel-dashboard/resources/views/hris.blade.php`)
-- Integrated Laravel 11 management system featuring Master Data, Attendance recap, Evaluation, Payroll calculator, and Excel bulk importer with Shadcn UI & Tailwind CSS styling.
-
-### 5. ⚛️ PennyLane & Ingenii Hybrid Networks (`src/quantum_core/`)
+### 4. ⚛️ PennyLane & Ingenii Hybrid Networks (`src/quantum_core/`)
 - Quantum Convolutional Layers, QAOA encodings, ZZ-Feature Maps, and parameter-shift rule gradients.
 
-### 6. 🔐 Shor's Quantum Order-Finding Algorithm (`src/quantum_core/shor_algorithm.py`)
+### 5. 🔐 Shor's Quantum Order-Finding Algorithm (`src/quantum_core/shor_algorithm.py`)
 - Quantum Phase Estimation for integer factorization ($M_a |x\rangle = |a \cdot x \bmod N\rangle$) and continued fraction convergents.
 
-### 7. 🌐 Angular 18 Single Page Application (`angular-dashboard/`)
+### 6. 🌐 Angular 18 Single Page Application (`angular-dashboard/`)
 - Reactive dashboard using Angular signals for quantum circuit inspection, live diffusion progress monitoring, and hardware telemetry.
+
+### 7. 💼 Laravel 11 API Engine (`laravel-dashboard/`)
+- PHP REST API endpoints (`/api/quantum/models`, `/api/quantum/hardware-status`, `/api/quantum/sample`) and Artisan CLI routines (`php artisan quantum:sample`).
 
 ---
 
@@ -82,7 +83,7 @@ pip install -r requirements.txt
 python test_integration.py
 python shor_algorithm.py
 
-# 4. Launch Laravel Backend & HRIS ITK Dashboard
+# 4. Launch Laravel Backend Engine
 cd laravel-dashboard
 composer install
 php artisan serve
