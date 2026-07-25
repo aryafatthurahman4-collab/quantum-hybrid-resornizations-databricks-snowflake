@@ -1,0 +1,38 @@
+name: Laravel Dashboard CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup PHP 8.3
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, dom, fileinfo, sqlite3
+
+    - name: Copy .env
+      run: php -r "file_exists('laravel-dashboard/.env') || copy('laravel-dashboard/.env.example', 'laravel-dashboard/.env');"
+
+    - name: Install Dependencies
+      run: |
+        cd laravel-dashboard
+        composer install --no-progress --prefer-dist
+
+    - name: Generate key
+      run: |
+        cd laravel-dashboard
+        php artisan key:generate
+
+    - name: Run Tests
+      run: |
+        cd laravel-dashboard
+        php artisan test
