@@ -1,19 +1,36 @@
 """
 Root wrapper for Shor's Algorithm (Quantum Order Finding & Integer Factorization)
+
+This module provides a convenient interface to Shor's quantum algorithm implementation
+which reduces integer factorization to quantum order finding via phase estimation.
+
+Based on the theoretical framework:
+- Order-finding: find smallest r such that a^r ≡ 1 (mod N)
+- Quantum Phase Estimation on unitary M_a|x⟩ = |(a*x) mod N⟩
+- Eigenvectors |ψ_k⟩ with eigenvalues ω_r^k = e^(2πik/r)
+- Continued fraction algorithm for classical post-processing
+- Factor extraction from gcd(a^(r/2) ± 1, N) when r is even
 """
 
 from src.quantum_core.shor_algorithm import (
     OrderFindingQuantumCircuit,
     ShorsFactorizationAlgorithm,
     shor_factorize,
-    continued_fraction_order
+    shor_factorize_with_details,
+    continued_fraction_order,
+    demo_order_finding,
+    demo_factorization
 )
 
 if __name__ == "__main__":
-    test_numbers = [15, 21, 35, 77, 91]
-    print("=" * 65)
-    print("SHOR'S QUANTUM ORDER FINDING & INTEGER FACTORIZATION DEMO")
-    print("=" * 65)
-    for N in test_numbers:
-        f1, f2 = shor_factorize(N)
-        print(f"[OK] Factorization of N = {N:2d} -> {N} = {f1} x {f2}")
+    print("=" * 70)
+    print("SHOR'S QUANTUM ALGORITHM - INTEGER FACTORIZATION")
+    print("=" * 70)
+    
+    # Run comprehensive demos
+    demo_order_finding()
+    demo_factorization()
+    
+    print("\n" + "=" * 70)
+    print("DEMO COMPLETED")
+    print("=" * 70)
